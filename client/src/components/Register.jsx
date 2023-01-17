@@ -1,23 +1,61 @@
-import React from 'react';
-import Line from './Line';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
+  const [user, setUser] = useState({
+    fName: '',
+    lName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate();
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setUser((prevValue) => ({ ...prevValue, [name]: value }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8080/register', {
+        username: user.email,
+        fName: user.fName,
+        lName: user.lName,
+        email: user.email,
+        password: user.password,
+        confirmPassword: user.confirmPassword,
+      });
+      navigate('/login');
+    } catch (error) {
+      setErrorMessage(error.response.data.msg);
+    }
+  }
+
   return (
     <>
       <div className="">
-        <form className="login-form">
+        <form onSubmit={handleSubmit} className="login-form">
           <h3>Please Register</h3>
-          <label className="login-label" for="fName">
+          {errorMessage && <div className="error">{errorMessage}</div>}
+          <label className="login-label" htmlFor="fName">
             First Name
           </label>
           <input
+            onChange={handleChange}
+            value={user.fName}
             className="login-input"
             type="text"
             placeholder="Firs Name"
             name="fName"
             id="fName"
           />
-          <label className="login-label" for="lName">
+          <label className="login-label" htmlFor="lName">
             Last Name
           </label>
           <input
@@ -26,8 +64,10 @@ function Register() {
             placeholder="Name"
             name="lName"
             id="lName"
+            value={user.lName}
+            onChange={handleChange}
           />
-          <label className="login-label" for="email">
+          <label className="login-label" htmlFor="email">
             Email
           </label>
           <input
@@ -36,8 +76,10 @@ function Register() {
             placeholder="Email"
             name="email"
             id="email"
+            value={user.email}
+            onChange={handleChange}
           />
-          <label className="login-label" for="password">
+          <label className="login-label" htmlFor="password">
             Password
           </label>
           <input
@@ -46,8 +88,10 @@ function Register() {
             placeholder="Password"
             name="password"
             id="password"
+            value={user.password}
+            onChange={handleChange}
           />
-          <label className="login-label" for="confirmPassword">
+          <label className="login-label" htmlFor="confirmPassword">
             Confirm Password
           </label>
           <input
@@ -56,6 +100,8 @@ function Register() {
             placeholder="Confirm Password"
             name="confirmPassword"
             id="confirmPassword"
+            value={user.confirmPassword}
+            onChange={handleChange}
           />
           <button type="submit" className="login-button">
             Register

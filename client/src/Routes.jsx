@@ -11,16 +11,22 @@ import Line from './components/Line.jsx';
 import Projects from './components/Projects.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
+import { EmailVerificationLandingPage } from './components/EmailVerificationLandingPage.jsx';
+import Logout from './components/logout.jsx';
+
 
 function Routes() {
   return (
     <Router>
       <Header />
       <Switch>
+        <Route path="/verify-email/:verificationString"
+          element={ <EmailVerificationLandingPage />}></Route>
         <Route path="/login" element={ <Login /> }></Route>
+        <Route path="/logout" element={<Logout />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route
-          path="/"
+          path="/home"
           element={
             <>
               <Intro />
@@ -29,7 +35,6 @@ function Routes() {
               <Line />
               <Contact />
               <Line />
-            
             </>
           }
         ></Route>

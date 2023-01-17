@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   return (
     <header>
@@ -14,50 +15,53 @@ function Header() {
                 className="fa-solid fa-laptop-code"
                 aria-hidden="true"
               ></span>
-              <a href="/">
+              <Link to="/">
                 <span> Your Company Name</span>
-              </a>
+              </Link>
             </h1>
           </li>
           {isLogged ? (
             <>
               <li>
-                <a href="#projects">Projects</a>
+                <Link to="/home">Projects</Link>
               </li>
               <li>
-                <a href="about.html">About</a>
+                <Link to="/home">About</Link>
               </li>
               <li>
-                <a href="#contact">Contact Me</a>
+                <Link to="/home">Contact Me</Link>
               </li>
               <li>
-                <a href="#">
+                <Link to="/logout">Log out</Link>
+              </li>
+              <li>
+                <Link to="/home">
                   <span
                     className="fa-brands fa-linkedin"
                     aria-hidden="true"
                   ></span>
                   <span className="sr-only">LinkedIn</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#">
+                <Link to="/home">
                   <i className="fa-brands fa-github" aria-hidden="true"></i>
                   <span className="sr-only">Github</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="button">
+                <Link to="#" className="button">
                   Resume
-                </a>
+                </Link>
               </li>
             </>
           ) : (
             <>
               <li>
-                <a href="/login">Login</a>
+                <Link to="/login">Login</Link>
               </li>
               <li>
-                <a href="/register">Register</a>
+                <Link to="/register">Register</Link>
               </li>
             </>
           )}

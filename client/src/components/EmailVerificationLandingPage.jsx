@@ -1,0 +1,30 @@
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { EmailVerificationSuccess } from './EmailVerificationSuccess';
+import { EmailVerificationFail } from './EmailVerificationFail';
+
+export const EmailVerificationLandingPage = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const { verificationString } = useParams();
+   
+    useEffect(() => {
+        const loadVerification = async () => {
+            try {
+                const response = await axios.put('http://localhost:8080/verify-email', { verificationString });
+                setIsSuccess(true);
+                setIsLoading(false);
+            } catch (e) { 
+                setIsSuccess(false);
+                setIsLoading(false);
+            }
+        }
+
+        loadVerification();
+    }, [verificationString]);
+
+    if (isLoading) return <p>Loading...</p>;
+    if (!isSuccess) return <EmailVerificationFail />
+    return <EmailVerificationSuccess />
+}
