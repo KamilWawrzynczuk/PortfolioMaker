@@ -23,16 +23,17 @@ function Register() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/register', {
-        username: user.email,
-        fName: user.fName,
-        lName: user.lName,
-        email: user.email,
-        password: user.password,
-        confirmPassword: user.confirmPassword,
-      },
-        { withCredentials: true}
-       );
+      const response = await axios.post(
+        'http://localhost:8080/users/register',
+        {
+          fName: user.fName,
+          lName: user.lName,
+          email: user.email,
+          password: user.password,
+          confirmPassword: user.confirmPassword,
+        },
+        { withCredentials: true }
+      );
       navigate('/login');
     } catch (error) {
       setErrorMessage(error.response.data.msg);

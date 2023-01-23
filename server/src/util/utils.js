@@ -1,12 +1,15 @@
 import { pbkdf2Sync, randomBytes } from 'crypto';
-import { sign, verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { readFileSync } from 'fs';
-import { join } from 'path';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const pathToKey = join(__dirname, '..', 'id_rsa_priv.pem');
-const pathToPubKey = join(__dirname, '..', 'id_rsa_pub.pem');
-const PRIV_KEY = readFileSync(pathToKey, 'utf8');
-const PUB_KEY = readFileSync(pathToPubKey, 'utf8')
+// ES6 modules not supporting __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const PRIV_KEY = readFileSync(__dirname + '/id_rsa_priv.pem', 'utf8');
+const PUB_KEY = readFileSync(__dirname +'/id_rsa_pub.pem', 'utf8')
 /**
  * -------------- HELPER FUNCTIONS ----------------
  */
@@ -20,7 +23,7 @@ const PUB_KEY = readFileSync(pathToPubKey, 'utf8')
  * This function uses the crypto library to decrypt the hash using the salt and then compares
  * the decrypted hash/salt with the password that the user provided at login
  */
-function validPassword(password, hash, salt) {
+export function validPassword(password, hash, salt) {
   var hashVerify = pbkdf2Sync(password, salt, 10000, 64, 'sha512')
     .toString('hex');
   return hash === hashVerify;
@@ -36,7 +39,7 @@ function validPassword(password, hash, salt) {
  * ALTERNATIVE: It would also be acceptable to just use a hashing algorithm to make a hash of the plain text password.
  * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
-function genPassword(password) {
+export function genPassword(password) {
   var salt = randomBytes(32).toString('hex');
   var genHash = pbkdf2Sync(password, salt, 10000, 64, 'sha512')
     .toString('hex');
@@ -50,7 +53,7 @@ function genPassword(password) {
 /**
  * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
  */
-function issueJWT(user) {
+export function issueJWT(user) {
   const _id = user._id;
 
   const expiresIn = '1d';
@@ -60,7 +63,7 @@ function issueJWT(user) {
     iat: Date.now(),
   };
 
-  const signedToken = sign(payload, PRIV_KEY, {
+  const signedToken = jwt.sign(payload, PRIV_KEY, {
     expiresIn: expiresIn,
     algorithm: 'RS256',
   });
@@ -71,12 +74,12 @@ function issueJWT(user) {
   };
 }
 
-function authMiddleware(req, res, next) {
+export function authMiddleware(req, res, next) {
   const tokenParts = req.headers.authorization.split(' ');
 
   if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S*\.\S*\.S*/) !== null) {
     try {
-      const verification = verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] })
+      const verification = jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] })
       req.jwt = verification;
       next();
     } catch (error) {
@@ -95,11 +98,3 @@ function authMiddleware(req, res, next) {
  
 }
 
-const _validPassword = validPassword;
-export { _validPassword as validPassword };
-const _genPassword = genPassword;
-export { _genPassword as genPassword };
-const _issueJWT = issueJWT;
-export { _issueJWT as issueJWT };
-const _authMiddleware = authMiddleware;
-export { _authMiddleware as authMiddleware };

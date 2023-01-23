@@ -22,8 +22,8 @@ function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/login', {
-        username: credentials.email,
+      const response = await axios.post('http://localhost:8080/users/login', {
+        email: credentials.email,
         password: credentials.password,
       });
       navigate('/home');

@@ -2,107 +2,106 @@ import { Router } from 'express';
 import User from '../../models/user.model.js';
 import { sendEmail } from '../../util/sendEmail.js';
 import { v4 as uuidv4 } from 'uuid';
-import passport from 'passport';
+import { genPassword, validPassword, issueJWT } from '../../util/utils.js';
 
 export const users_route = Router();
 
 // POST LOGIN
-users_route.post('/login', async function (req, res, next) {
-  try {
-    // this user will be send to passport method
-    // to verify user
-    const user = new User({
-      username: req.body.username,
-      password: req.body.password,
-    });
+users_route.post('/login', function (req, res, next) {
+  const { email, password } = req.body;
 
-    // checking if user verified email
-    const { isVerified } = await User.findOne({ email: req.body.username });
-    if (!isVerified) {
-      return res.status(401).json({ msg: 'Your email is not verified.' });
-    }
-    if (user.username === '' || user.password === '') {
-      return res.status(401).json({ msg: 'Both fields required.' });
-    }
+  if (email === '' || password === '') {
+    return res.status(401).json({ msg: 'Both fields required.' });
+  }
 
-    // verifying credentials with passport.js
-    req.login(user, function (err) {
-      if (err) {
-        console.log(err);
-        res.status(401).send('Incorrect email or password.');
+  User.findOne({ email: req.body.email })
+    .then((user) => {
+      if (!user) {
+        res.status(401).json({ success: false, msg: 'Could not find user' });
+      }
+
+      // if (!user.isVerified) {
+      //   return res.status(401).json({ msg: 'Your email is not verified.' });
+      // }
+
+      const isValid = validPassword(
+        String(req.body.password),
+        user.hash,
+        user.salt
+      );
+
+      if (isValid) {
+        const tokenObject = issueJWT(user);
+
+        res.status(200).json({
+          success: true,
+          user_id: user._id,
+          token: tokenObject.token,
+          expiresIn: tokenObject.expires,
+        });
       } else {
-        passport.authenticate('local')(req, res, function () {
-          res.status(200).json({ msg: 'You are logged in.' });
+        res.status(401).json({
+          success: false,
+          msg: 'Password or email are incorrect.',
         });
       }
-    });
-  } catch (error) {
-    next(error);
-  }
+    })
+    .catch((err) => next(err));
 });
 
 // POST REGISTER
 users_route.post('/register', async function (req, res, next) {
-  try {
-    const { password, confirmPassword } = req.body;
-    const verificationString = uuidv4();
+  const { password, confirmPassword } = req.body;
+  const verificationString = uuidv4();
 
-    if (password !== confirmPassword) {
-      return res.status(400).send({ msg: 'Passwords need to be the same.' });
-    }
-    // using register method from
-    // mongoose-passport-local strategy from User model
-    User.register(
-      {
-        username: req.body.email,
-        lName: req.body.lName,
-        fName: req.body.fName,
-        email: req.body.email,
-        verificationString: verificationString,
-        changeAt: new Date(),
-      },
-      req.body.password,
-      function (err) {
-        if (err) {
-          console.log(err);
-          res.status(401).send('Registration failed.');
-        } else {
-          passport.authenticate('local')(req, res, async function () {
-            // this will happen only with success
-            try {
-              await sendEmail({
-                to: req.body.email,
-                from: 'kamil.wawrzynczuk@gmail.com',
-                subject: 'Please verify your email',
-                text: `
-                    Thanks for signing up! To verify your email, click here:
-                    http://localhost:5173/verify-email/${verificationString}
-                `,
-              });
-            } catch (e) {
-              console.log(e);
-              res.sendStatus(500);
-            }
-            res.status(200).json({ msg: 'User successfully registered.' });
-          });
-        }
-      }
-    );
-  } catch (error) {
-    next(error);
+  if (password !== confirmPassword) {
+    return res.status(400).send({ msg: 'Passwords need to be the same.' });
   }
+
+  const saltHash = genPassword(password);
+
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
+
+  const newUser = new User({
+    lName: req.body.lName,
+    fName: req.body.fName,
+    email: req.body.email,
+    verificationString: verificationString,
+    changeAt: new Date(),
+    hash: hash,
+    salt: salt,
+  });
+
+  newUser
+    .save()
+    .then(async (user) => {
+      // new user need to verify email
+      await sendEmail({
+        to: req.body.email,
+        from: 'kamil.wawrzynczuk@gmail.com',
+        subject: 'Please verify your email',
+        text: `
+            Thanks for signing up! To verify your email, click here:
+            http://localhost:5173/verify-email/${user.verificationString}
+        `,
+      });
+
+      const jwt = issueJWT(user);
+      res.json({
+        success: true,
+        user_id: user.id,
+        token: jwt.token,
+        expiresIn: jwt.expires,
+      });
+    })
+    .catch((err) => next(err));
 });
 
 // GET LOGOUT
 users_route.get('/logout', async function (req, res, next) {
   try {
-    req.logout(function (err) {
-      if (err) {
-        res.status(500).json({ msg: 'Error while login out.' });
-      } else {
-        res.status(200).json({ msg: 'You logged out.' });
-      }
-    });
+    res.status(200).json({ msg: 'You logged out.' });
   } catch (error) {
     next(error);
   }
