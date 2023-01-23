@@ -13,7 +13,6 @@ const Logout = () => {
         const response = await axios.put('http://localhost:8080/logout');
         setIsSuccess(true);
         setIsLoading(false);
-        navigate('/home');
       } catch (err) {
         console.log(err);
         setIsSuccess(false);
@@ -25,8 +24,8 @@ const Logout = () => {
   }, []);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!isSuccess) navigate('/login')
-  navigate('/home')
+  if (!isSuccess) return navigate('/login')
+  navigate('/login')
 };
 
 export default Logout;

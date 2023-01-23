@@ -2,7 +2,6 @@ import { model, Schema } from 'mongoose'
 import passportLocalMongoose from 'passport-local-mongoose';
 import findOrCreate from 'mongoose-findorcreate';
 
-
 const userSchema = new Schema({
   fName: {
     type: String,
@@ -30,7 +29,9 @@ const userSchema = new Schema({
     type: String,
     default: null
   },
-  changeAt: Date
+  changeAt: {
+    type: Date,
+  }
 })
 
 // use passport-local-mongoose

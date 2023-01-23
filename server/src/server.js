@@ -1,26 +1,32 @@
 import express from 'express';
-import { routes } from './routes';
-import { initializeDbConnection } from './db';
+import { initializeDbConnection } from './db.js';
 import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { Strategy as FacebookStrategy } from 'passport-facebook';
-
-import User from './models/user.model';
+import cookieParser from 'cookie-parser';
+//import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+//import { Strategy as FacebookStrategy } from 'passport-facebook';
+import User from './models/user.model.js';
 import createError from 'http-errors';
+import routes from './routes/index.js';
 
 const app = express();
 
 const PORT = process.env.PORT || 8080;
 
 // MIDDLEWARE
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // where react app is working
+    credentials: true,
+  })
+);
 
 // This allows us to access the body of POST/PUT
 // requests in our route handlers (as req.body)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.SECRET));
 
 // SET UP SESSION
 app.use(
@@ -55,10 +61,7 @@ passport.deserializeUser(function (user, cb) {
 });
 
 // Add all the routes to our Express server
-// exported from routes/index.js
-routes.forEach((route) => {
-  app[route.method](route.path, route.handler);
-});
+app.use(routes);
 
 /** ERROR HANDLERS */
 //404

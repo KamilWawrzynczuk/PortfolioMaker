@@ -7,6 +7,12 @@ body {
   background-color: var(--black);
   color: var(--white);
   font-size: var(--font-size);
+  
+}
+
+.container {
+  position: relative;
+  min-height: 100vh;
 }
 
 h1,

@@ -30,7 +30,9 @@ function Register() {
         email: user.email,
         password: user.password,
         confirmPassword: user.confirmPassword,
-      });
+      },
+        { withCredentials: true}
+       );
       navigate('/login');
     } catch (error) {
       setErrorMessage(error.response.data.msg);

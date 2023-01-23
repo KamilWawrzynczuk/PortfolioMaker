@@ -1,13 +1,10 @@
-import { loginRoute } from './loginRoute';
-import { registerRoute } from './registerRoute';
-import { homeRoute } from './homeRoute';
-import { verifyEmailRoute } from './verifyEmailRoute';
-import { logOutRoute } from './logOutRoute';
+import { Router } from 'express';
+import { users_route } from './Users/users_route.js';
+import { home_route } from './home_route.js';
 
-export const routes = [
-  homeRoute,
-  registerRoute,
-  loginRoute,
-  verifyEmailRoute,
-  logOutRoute
-];
+const routes = Router();
+
+routes.use('/', home_route);
+routes.use('/users', users_route);
+
+export default routes;
