@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PRIV_KEY = readFileSync(__dirname + '/id_rsa_priv.pem', 'utf8');
-const PUB_KEY = readFileSync(__dirname +'/id_rsa_pub.pem', 'utf8')
+const PUB_KEY = readFileSync(__dirname + '/id_rsa_pub.pem', 'utf8');
 /**
  * -------------- HELPER FUNCTIONS ----------------
  */
@@ -24,8 +24,9 @@ const PUB_KEY = readFileSync(__dirname +'/id_rsa_pub.pem', 'utf8')
  * the decrypted hash/salt with the password that the user provided at login
  */
 export function validPassword(password, hash, salt) {
-  var hashVerify = pbkdf2Sync(password, salt, 10000, 64, 'sha512')
-    .toString('hex');
+  var hashVerify = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString(
+    'hex'
+  );
   return hash === hashVerify;
 }
 
@@ -41,8 +42,7 @@ export function validPassword(password, hash, salt) {
  */
 export function genPassword(password) {
   var salt = randomBytes(32).toString('hex');
-  var genHash = pbkdf2Sync(password, salt, 10000, 64, 'sha512')
-    .toString('hex');
+  var genHash = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
 
   return {
     salt: salt,
@@ -77,9 +77,14 @@ export function issueJWT(user) {
 export function authMiddleware(req, res, next) {
   const tokenParts = req.headers.authorization.split(' ');
 
-  if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S*\.\S*\.S*/) !== null) {
+  if (
+    tokenParts[0] === 'Bearer' &&
+    tokenParts[1].match(/\S*\.\S*\.S*/) !== null
+  ) {
     try {
-      const verification = jwt.verify(tokenParts[1], PUB_KEY, { algorithms: ['RS256'] })
+      const verification = jwt.verify(tokenParts[1], PUB_KEY, {
+        algorithms: ['RS256'],
+      });
       req.jwt = verification;
       next();
     } catch (error) {
@@ -94,7 +99,4 @@ export function authMiddleware(req, res, next) {
       msg: 'You are not authorized to visit this route.',
     });
   }
-
- 
 }
-
