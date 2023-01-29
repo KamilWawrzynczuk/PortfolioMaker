@@ -7,7 +7,6 @@ import { writeFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-
 // ES6 modules not supporting __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,11 +17,11 @@ function genKeyPair() {
     modulusLength: 4096, // bits - standard for RSA keys
     publicKeyEncoding: {
       type: 'pkcs1', // "Public Key Cryptography Standards 1"
-      format: 'pem', // Most common formatting choice
+      format: 'pem', // common formatting choice
     },
     privateKeyEncoding: {
       type: 'pkcs1', // "Public Key Cryptography Standards 1"
-      format: 'pem', // Most common formatting choice
+      format: 'pem', // common formatting choice
     },
   });
 

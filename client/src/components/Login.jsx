@@ -1,68 +1,81 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { setLocalStorage } from '../util/setLocalStorage';
+import { useAuth } from '../auth/auth';
 
 function Login() {
 
-  const [credentials, setCredentials] = useState({
+  const auth = useAuth();
+  const [user, setUser] = useState({
     email: '',
     password: '',
-  })
+  });
+
+  const location = useLocation();
+  const redirectPath = location.state?.path || '/';
 
   const [errorMessage, setErrorMessage] = useState('');
-
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token') || '';
+  //   axios
+  //     .get('http://localhost:8080/protected', {
+  //       headers: {
+  //         Authorization: token,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       navigate('/users/protected');
+  //     })
+  //     .catch((err) => {
+  //       console.log('You are not log in.');
+  //       navigate('/users/login')
+  //     });
+  // },[]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setCredentials((prevValue) => ({ ...prevValue, [name]: value }));
+    setUser((prevValue) => ({ ...prevValue, [name]: value }));
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:8080/users/login', {
-        email: credentials.email,
-        password: credentials.password,
-      });
-      navigate('/home');
-    } catch (error) {
-      console.log(error)
-      setErrorMessage(error.response.data.msg);
-    }
+    auth.contextValue.login(user);
+    navigate(redirectPath, { replace: true });
   }
-
   return (
-    <div className="">
-      <form onSubmit={handleSubmit} className="login-form">
+    <div className=''>
+      <form onSubmit={handleSubmit} className='login-form'>
         <h3>Please Login</h3>
-        {errorMessage && <div className="error">{errorMessage}</div>}
-        <label className="login-label" htmlFor="email">
+        {auth.contextValue.user.msg && <div className='error'>{auth.contextValue.user.msg}</div>}
+        <label className='login-label' htmlFor='email'>
           Email
         </label>
         <input
-          className="login-input"
-          type="text"
-          placeholder="Email"
-          name="email"
-          id="email"
-          value={credentials.email}
+          className='login-input'
+          type='text'
+          placeholder='Email'
+          name='email'
+          id='email'
+          value={user.email}
           onChange={handleChange}
         />
-        <label className="login-label" htmlFor="password">
+        <label className='login-label' htmlFor='password'>
           Password
         </label>
         <input
-          className="login-input"
-          type="password"
-          placeholder="Password"
-          name="password"
-          id="password"
-          value={credentials.password}
+          className='login-input'
+          type='password'
+          placeholder='Password'
+          name='password'
+          id='password'
+          value={user.password}
           onChange={handleChange}
         />
-        <button type="submit" className="login-button">
+        <button type='submit' className='login-button'>
           Log In
         </button>
       </form>

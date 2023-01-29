@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose'
+import findOrCreate from 'mongoose-findorcreate';
 
 const userSchema = new Schema({
   fName: {
@@ -33,6 +34,16 @@ const userSchema = new Schema({
   hash: String,
   salt: String
 })
+
+userSchema.plugin(findOrCreate);
+
+userSchema.post('save', function (error, doc, next) {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(new Error('Email is already in use.'));
+  } else {
+    next(error);
+  }
+});
 
 const User = model('User', userSchema);
 

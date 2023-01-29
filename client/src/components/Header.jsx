@@ -1,73 +1,98 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useAuth } from '../auth/auth';
 
 function Header() {
-  const [isLogged, setIsLogged] = useState(false);
+  // const [isLogged, setIsLogged] = useState(false);
+  const auth = useAuth();
 
   return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <h1>
-              <span
-                className="fa-solid fa-laptop-code"
-                aria-hidden="true"
-              ></span>
-              <Link to="/">
-                <span> Your Company Name</span>
-              </Link>
-            </h1>
-          </li>
-          {isLogged ? (
-            <>
-              <li>
-                <Link to="/home">Projects</Link>
-              </li>
-              <li>
-                <Link to="/home">About</Link>
-              </li>
-              <li>
-                <Link to="/home">Contact Me</Link>
-              </li>
-              <li>
-                <Link to="/logout">Log out</Link>
-              </li>
-              <li>
-                <Link to="/home">
-                  <span
-                    className="fa-brands fa-linkedin"
-                    aria-hidden="true"
-                  ></span>
-                  <span className="sr-only">LinkedIn</span>
+    <>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <h1>
+                <span
+                  className='fa-solid fa-laptop-code'
+                  aria-hidden='true'
+                ></span>
+                <Link to='/'>
+                  <span>Portfolio Creator</span>
                 </Link>
-              </li>
-              <li>
-                <Link to="/home">
-                  <i className="fa-brands fa-github" aria-hidden="true"></i>
-                  <span className="sr-only">Github</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="button">
-                  Resume
-                </Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/register">Register</Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </nav>
-    </header>
+              </h1>
+            </li>
+            {auth.contextValue.user.isAuth !== false ? (
+              <>
+                <li>
+                  <NavLink
+                    style={({ isActive }) => {
+                      return {
+                        color: isActive ? 'red' : '',
+                      };
+                    }}
+                    to='/'
+                  >
+                    Projects
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    style={({ isActive }) => {
+                      return {
+                        color: isActive ? 'pink' : '',
+                      };
+                    }}
+                    to='/'
+                  >
+                    About
+                  </NavLink>
+                </li>
+                <li>
+                  <Link to='/'>Contact Me</Link>
+                </li>
+                <li>
+                  <Link to='/users/profile'>Profile</Link>
+                </li>
+                <li>
+                  <Link to='/' onClick={auth.contextValue.logout}>Log out</Link>
+                </li>
+                <li>
+                  <Link to='/'>
+                    <span
+                      className='fa-brands fa-linkedin'
+                      aria-hidden='true'
+                    ></span>
+                    <span className='sr-only'>LinkedIn</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/'>
+                    <i className='fa-brands fa-github' aria-hidden='true'></i>
+                    <span className='sr-only'>Github</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='#' className='button'>
+                    Resume
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to='/users/login'>Login</Link>
+                </li>
+                <li>
+                  <Link to='/users/register'>Register</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      </header>
+    </>
   );
 }
 

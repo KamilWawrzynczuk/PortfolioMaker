@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  'eslint.workingDirectories': [{ mode: 'auto' }],
+  'eslint.workingDirectories': [],
   extends: ['eslint:recommended', 'plugin:react/recommended'],
   overrides: [],
   parserOptions: {

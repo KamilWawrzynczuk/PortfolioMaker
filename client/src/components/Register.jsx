@@ -31,12 +31,11 @@ function Register() {
           email: user.email,
           password: user.password,
           confirmPassword: user.confirmPassword,
-        },
-        { withCredentials: true }
+        }
       );
-      navigate('/login');
+      navigate('/users/login');
     } catch (error) {
-      setErrorMessage(error.response.data.msg);
+      setErrorMessage(error.response.data.errors[0].msg);
     }
   }
 

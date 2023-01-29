@@ -37,8 +37,6 @@ export function validPassword(password, hash, salt) {
  * This function takes a plain text password and creates a salt and hash out of it.  Instead of storing the plaintext
  * password in the database, the salt and hash are stored for security
  *
- * ALTERNATIVE: It would also be acceptable to just use a hashing algorithm to make a hash of the plain text password.
- * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
 export function genPassword(password) {
   var salt = randomBytes(32).toString('hex');
@@ -74,6 +72,12 @@ export function issueJWT(user) {
   };
 }
 
+/**
+ * @param {*} authMiddleware - function takes
+ * token from client and and verify it with jwt
+ * method and public key
+ */
+
 export function authMiddleware(req, res, next) {
   const tokenParts = req.headers.authorization.split(' ');
 
@@ -85,6 +89,7 @@ export function authMiddleware(req, res, next) {
       const verification = jwt.verify(tokenParts[1], PUB_KEY, {
         algorithms: ['RS256'],
       });
+     
       req.jwt = verification;
       next();
     } catch (error) {

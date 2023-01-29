@@ -1,31 +1,25 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Navigate} from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../auth/auth';
 
-const Logout = () => {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+const Logout = ({children}) => {
+  const auth = useAuth();
 
   useEffect(() => {
-    const loadVerification = async () => {
-      try {
-        const response = await axios.put('http://localhost:8080/logout');
-        setIsSuccess(true);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err);
-        setIsSuccess(false);
-        setIsLoading(false);
-      }
-    };
-
-    loadVerification();
+    (() => {
+      axios.get('http://localhost:8080/users/logout')
+        .then(res => auth.contextValue.logout())
+        .catch(err => {
+          throw new Error('Log out was not successfully.');
+      })
+    })()
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!isSuccess) return navigate('/login')
-  navigate('/login')
+  if (!auth.contextValue.user.isAuth) {
+    return <Navigate to='/' state={{ path: location.pathname }} />;
+  }
+  return children;
 };
 
 export default Logout;

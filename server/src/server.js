@@ -1,12 +1,9 @@
 import express from 'express';
 import { initializeDbConnection } from './db.js';
 import cors from 'cors';
-// import session from 'express-session';
-// import passport from 'passport';
+import session from 'express-session';
+import passport from 'passport';
 import cookieParser from 'cookie-parser';
-//import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-//import { Strategy as FacebookStrategy } from 'passport-facebook';
-// import User from './models/user.model.js';
 import createError from 'http-errors';
 import routes from './routes/index.js';
 
@@ -17,8 +14,7 @@ const PORT = process.env.PORT || 8080;
 // MIDDLEWARE
 app.use(
   cors({
-    origin: 'http://localhost:5173/', // where react app is working
-    withCredentials: true,
+    origin: 'http://localhost:5173', // where react app is working
   })
 );
 
@@ -28,37 +24,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.SECRET));
 
-// SET UP SESSION
-// app.use(
-//   session({
-//     secret: process.env.SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
+//SET UP SESSION
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
 // INITIALIZE PASSPORT
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
-// initialize using passport strategy on our user model
-// passport.use(User.createStrategy());
-
-//sending to client information's about our user
-// passport.serializeUser(function (user, cb) {
-//   process.nextTick(function () {
-//     return cb(null, {
-//       id: user.id,
-//       username: user.username,
-//     });
-//   });
-// });
-
-// passport.deserializeUser(function (user, cb) {
-//   process.nextTick(function () {
-//     return cb(null, user);
-//   });
-// });
+import ('./config/passportConfig.js');
 
 // Add all the routes to our Express server
 app.use(routes);
