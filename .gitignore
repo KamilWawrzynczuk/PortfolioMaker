@@ -1,4 +1,4 @@
 node_modules
 .env
 package-lock.json
-.eslintrc.jslingfonre
+/server/src/util/id_rsa_priv.pem

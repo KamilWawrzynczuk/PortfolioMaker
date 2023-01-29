@@ -1,5 +1,4 @@
 import { model, Schema } from 'mongoose'
-import passportLocalMongoose from 'passport-local-mongoose';
 import findOrCreate from 'mongoose-findorcreate';
 
 const userSchema = new Schema({
@@ -31,14 +30,20 @@ const userSchema = new Schema({
   },
   changeAt: {
     type: Date,
-  }
+  },
+  hash: String,
+  salt: String
 })
 
-// use passport-local-mongoose
-//to hash password and salt and save users into db
-userSchema.plugin(passportLocalMongoose);
-userSchema.plugin(findOrCreate)
+userSchema.plugin(findOrCreate);
 
+userSchema.post('save', function (error, doc, next) {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    next(new Error('Email is already in use.'));
+  } else {
+    next(error);
+  }
+});
 
 const User = model('User', userSchema);
 

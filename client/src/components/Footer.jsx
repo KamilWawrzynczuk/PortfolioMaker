@@ -3,7 +3,7 @@ import React from 'react'
 function Footer() {
   return (
     <footer>
-      <h2>Kamil Wawrzyńczuk &middot; Web Developer</h2>
+      <h2>Your awesome name &middot; and title</h2>
       <ul>
         <li>
           <a href="#">
@@ -25,7 +25,7 @@ function Footer() {
         </li>
       </ul>
 
-      <p><small>&copy; 2022 Kamil Wawrzyńczuk. All rights reserved.</small></p>
+      <p><small>&copy; 2022 Your awesome name. All rights reserved.</small></p>
     </footer>
   )
 }
