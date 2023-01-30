@@ -13,7 +13,7 @@ function Profile() {
 
   return (
     <>
-      <div>Profile Page. Welcome {auth.contextValue.user.email}</div>
+      <div>Profile Page. Welcome</div>
       <button onClick={handleLogout}>Logout</button>
     </>
   );

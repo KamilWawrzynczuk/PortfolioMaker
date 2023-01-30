@@ -54,7 +54,7 @@ export function genPassword(password) {
 export function issueJWT(user) {
   const _id = user._id;
 
-  const expiresIn = '1d';
+  const expiresIn = '2d';
 
   const payload = {
     sub: _id,
@@ -79,8 +79,14 @@ export function issueJWT(user) {
  */
 
 export function authMiddleware(req, res, next) {
+  if (req.headers.authorization === undefined) {
+    return  res.status(401).json({
+      success: false,
+      msg: 'You are not authorized to visit this route.',
+    });
+  }
   const tokenParts = req.headers.authorization.split(' ');
-
+  
   if (
     tokenParts[0] === 'Bearer' &&
     tokenParts[1].match(/\S*\.\S*\.S*/) !== null

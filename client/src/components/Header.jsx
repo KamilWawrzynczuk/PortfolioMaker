@@ -1,12 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/auth';
 
 function Header() {
-  // const [isLogged, setIsLogged] = useState(false);
-  const auth = useAuth();
 
+  const auth = useAuth();
+  const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
   return (
     <>
       <header>
@@ -23,7 +22,7 @@ function Header() {
                 </Link>
               </h1>
             </li>
-            {auth.contextValue.user.isAuth !== false ? (
+            {isAuth !== false ? (
               <>
                 <li>
                   <NavLink
@@ -56,7 +55,9 @@ function Header() {
                   <Link to='/users/profile'>Profile</Link>
                 </li>
                 <li>
-                  <Link to='/' onClick={auth.contextValue.logout}>Log out</Link>
+                  <Link to='/' onClick={auth.contextValue.logout}>
+                    Log out
+                  </Link>
                 </li>
                 <li>
                   <Link to='/'>

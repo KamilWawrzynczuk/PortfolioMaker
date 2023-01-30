@@ -11,7 +11,7 @@ export function loginUser(req, res, next) {
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
-        console.log(user)
+        console.log(user, ' w loginUser')
         return res
           .status(401)
           .json({ success: false, msg: 'Could not find user' });
