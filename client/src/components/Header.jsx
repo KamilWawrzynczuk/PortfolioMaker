@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/auth';
 
 function Header() {
-
   const auth = useAuth();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
   return (

@@ -6,7 +6,6 @@ import { setLocalStorage } from '../util/setLocalStorage';
 import { useAuth } from '../auth/auth';
 
 function Login() {
-
   const auth = useAuth();
   const [user, setUser] = useState({
     email: '',
@@ -16,23 +15,31 @@ function Login() {
   const location = useLocation();
   const redirectPath = location.state?.path || '/';
 
-  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   // useEffect(() => {
   //   const token = localStorage.getItem('token') || '';
   //   axios
-  //     .get('http://localhost:8080/protected', {
-  //       headers: {
-  //         Authorization: token,
-  //       },
+  //     // This address will change depends on PORT
+  //     // you are using or after uploading
+  //     .post('http://localhost:8080/users/login', {
+  //       email: user.email,
+  //       password: user.password,
   //     })
-  //     .then((res) => {
-  //       navigate('/users/protected');
+  //     .then((user) => {
+  //       setLocalStorage(user);
+  //       window.localStorage.setItem('isAuth', 'true');
+  //       setUser({
+  //         isAuth: true,
+  //         msg: '',
+  //       });
   //     })
-  //     .catch((err) => {
-  //       console.log('You are not log in.');
-  //       navigate('/users/login')
+  //     .catch((error) => {
+  //       window.localStorage.setItem('isAuth', 'false');
+  //       setUser({
+  //         isAuth: false,
+  //         msg: error.response.data.msg,
+  //       });
   //     });
   // },[]);
 
@@ -43,14 +50,39 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    auth.contextValue.login(user);
-    navigate(redirectPath, { replace: true });
+   // auth.contextValue.login(user);
+    axios
+      // This address will change depends on PORT
+      // you are using or after uploading
+      .post('http://localhost:8080/users/login', {
+        email: user.email,
+        password: user.password,
+      })
+      .then((user) => {
+        setLocalStorage(user);
+        window.localStorage.setItem('isAuth', 'true');
+        auth.contextValue.setUser({
+          isAuth: true,
+          msg: '',
+        });
+        navigate(redirectPath, { replace: true });
+      })
+      .catch((error) => {
+        window.localStorage.setItem('isAuth', 'false');
+        auth.contextValue.setUser({
+          isAuth: false,
+          msg: error.response.data.msg,
+        });
+      });
   }
+  
   return (
     <div className=''>
       <form onSubmit={handleSubmit} className='login-form'>
         <h3>Please Login</h3>
-        {auth.contextValue.user.msg && <div className='error'>{auth.contextValue.user.msg}</div>}
+        {auth.contextValue.user.msg && (
+          <div className='error'>{auth.contextValue.user.msg}</div>
+        )}
         <label className='login-label' htmlFor='email'>
           Email
         </label>

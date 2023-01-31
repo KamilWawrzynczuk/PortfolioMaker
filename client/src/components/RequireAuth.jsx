@@ -4,9 +4,8 @@ import { useAuth } from '../auth/auth';
 import axios from 'axios';
 
 function RequireAuth({ children }) {
-
   const location = useLocation();
-  const isAuth = window.localStorage.getItem('isAuth')
+  const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
 
   // useEffect(() => {
   //   (() => {
@@ -27,7 +26,7 @@ function RequireAuth({ children }) {
   //             msg: '',
   //           });
   //       })
-  //       .catch((err) => {  
+  //       .catch((err) => {
   //         console.log(err, ' err w require')
   //           // window.localStorage.setItem('isAuth', 'false')
   //           // auth.contextValue.setUser({
@@ -43,7 +42,6 @@ function RequireAuth({ children }) {
   } else {
     return children;
   }
-  
 }
 
 export default RequireAuth;
