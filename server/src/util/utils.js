@@ -54,7 +54,7 @@ export function genPassword(password) {
 export function issueJWT(user) {
   const _id = user._id;
 
-  const expiresIn = '2d';
+  const expiresIn = '10000';
 
   const payload = {
     sub: _id,
