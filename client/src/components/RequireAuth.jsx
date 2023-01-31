@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../auth/auth';
-import axios from 'axios';
-
+import { isLoggedIn } from '../util/isLoggedIn';
+import moment from 'moment';
 function RequireAuth({ children }) {
   const location = useLocation();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
-
+  
   // useEffect(() => {
   //   (() => {
   //     const token = localStorage.getItem('token') || '';

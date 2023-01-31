@@ -17,32 +17,6 @@ function Login() {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token') || '';
-  //   axios
-  //     // This address will change depends on PORT
-  //     // you are using or after uploading
-  //     .post('http://localhost:8080/users/login', {
-  //       email: user.email,
-  //       password: user.password,
-  //     })
-  //     .then((user) => {
-  //       setLocalStorage(user);
-  //       window.localStorage.setItem('isAuth', 'true');
-  //       setUser({
-  //         isAuth: true,
-  //         msg: '',
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       window.localStorage.setItem('isAuth', 'false');
-  //       setUser({
-  //         isAuth: false,
-  //         msg: error.response.data.msg,
-  //       });
-  //     });
-  // },[]);
-
   function handleChange(event) {
     const { name, value } = event.target;
     setUser((prevValue) => ({ ...prevValue, [name]: value }));
@@ -50,7 +24,7 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-   // auth.contextValue.login(user);
+    // auth.contextValue.login(user);
     axios
       // This address will change depends on PORT
       // you are using or after uploading
@@ -68,6 +42,7 @@ function Login() {
         navigate(redirectPath, { replace: true });
       })
       .catch((error) => {
+        console.log(error, 'tutaj');
         window.localStorage.setItem('isAuth', 'false');
         auth.contextValue.setUser({
           isAuth: false,
@@ -75,7 +50,20 @@ function Login() {
         });
       });
   }
-  
+
+  // function handleFacebook() {
+  //   axios
+  //     // This address will change depends on PORT
+  //     // you are using or after uploading
+  //     .get('http://localhost:8080/auth/facebook')
+  //     .then((user) => {
+  //       console.log(user);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
   return (
     <div className=''>
       <form onSubmit={handleSubmit} className='login-form'>
@@ -110,6 +98,13 @@ function Login() {
         <button type='submit' className='login-button'>
           Log In
         </button>
+        <a
+          href='http://localhost:8080/auth/facebook'
+          role='button'
+          className='login-button login-button-facebook'
+        >
+          Log in With Facebook
+        </a>
       </form>
     </div>
   );

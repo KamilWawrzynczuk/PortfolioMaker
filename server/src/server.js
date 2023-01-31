@@ -1,6 +1,7 @@
 import express from 'express';
 import { initializeDbConnection } from './db.js';
 import cors from 'cors';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
@@ -17,6 +18,11 @@ app.use(
     origin: 'http://localhost:5173', // where react app is working
   })
 );
+
+// app.use(
+//   '/',
+//   createProxyMiddleware({ target: 'http://localhost:5173', changeOrigin: true })
+// );
 
 // This allows us to access the body of POST/PUT
 // requests in our route handlers (as req.body)
@@ -37,7 +43,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-import ('./config/passportConfig.js');
+import('./config/passportConfig.js');
 
 // Add all the routes to our Express server
 app.use(routes);

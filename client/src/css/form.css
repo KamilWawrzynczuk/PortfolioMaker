@@ -67,11 +67,29 @@
   border-radius: 5px;
   cursor: pointer;
 
-  transition: all 0.1s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .login-button:hover {
   background-color: var(--magenta);
   border: 1px solid var(--magenta);
+  color: var(--white);
+}
+
+.login-button-facebook {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+
+  background-color: #4267b2;
+  border: 1px solid #4267b2;
+  color: var(--white);
+}
+
+.login-button-facebook:hover {
+  background-color: #38599b;
+  border: 1px solid #38599b;
   color: var(--white);
 }

@@ -9,7 +9,7 @@ facebookRoute.get('/', passport.authenticate('facebook'), function (req, res) {
 });
 
 facebookRoute.get(
-  '/secrets',
+  '/secret',
   passport.authenticate('facebook', { failureRedirect: '/users/login' }),
   function (req, res) {
     // Successful authentication, redirect home.

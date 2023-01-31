@@ -1,18 +1,18 @@
-import { model, Schema } from 'mongoose'
+import { model, Schema } from 'mongoose';
 import findOrCreate from 'mongoose-findorcreate';
 
 const userSchema = new Schema({
   fName: {
     type: String,
-    require: [true, 'First name is required.']
+    require: [true, 'First name is required.'],
   },
   lName: {
     type: String,
-    require: [true, 'Last name is required.']
+    require: [true, 'Last name is required.'],
   },
   email: {
     type: String,
-    required: [true, 'Email is required.'],
+    // required: [true, 'Email is required.'],
     unique: [true, 'This email is already in use.'],
     lowercase: true,
   },
@@ -22,18 +22,18 @@ const userSchema = new Schema({
   },
   isVerified: {
     type: Boolean,
-    default: false
+    default: false,
   },
   verificationString: {
     type: String,
-    default: null
+    default: null,
   },
   changeAt: {
     type: Date,
   },
   hash: String,
-  salt: String
-})
+  salt: String,
+});
 
 userSchema.plugin(findOrCreate);
 

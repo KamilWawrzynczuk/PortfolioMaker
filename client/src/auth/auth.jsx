@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useMemo } from 'react';
 import { setLocalStorage } from '../util/setLocalStorage';
 import { useCallback } from 'react';
+import { isLoggedIn } from '../util/isLoggedIn';
 const AuthContext = createContext(null);
 
 const initialValue = {
@@ -27,26 +28,26 @@ export const AuthProvider = ({ children }) => {
         })
         .then((user) => {
           if (token !== null) {
-             window.localStorage.setItem('isAuth', 'true');
-          setUser({
-            isAuth: user.data.success,
-            msg: '',
-          });
+            window.localStorage.setItem('isAuth', 'true');
+            setUser({
+              isAuth: user.data.success,
+              msg: '',
+            });
           } else {
             window.localStorage.setItem('isAuth', 'true');
             setUser({
-              isAuth: user.response. data.success,
+              isAuth: user.response.data.success,
               msg: '',
             });
           }
         })
         .catch((err) => {
           if (token !== null) {
-          window.localStorage.setItem('isAuth', 'false');
-          setUser({
-            isAuth: err.data.success,
-            msg: '',
-          });
+            window.localStorage.setItem('isAuth', 'false');
+            setUser({
+              isAuth: err.data.success,
+              msg: '',
+            });
           } else {
             window.localStorage.setItem('isAuth', 'false');
             setUser({
@@ -54,10 +55,30 @@ export const AuthProvider = ({ children }) => {
               msg: '',
             });
           }
-          
         });
     })();
   }, []); // eslint-disable-line
+
+  // Checking if token is already expired and then
+  // logout user by delate localStorage and
+  // changing isAuth to false
+  useEffect(() => {
+    const expired = JSON.parse(window.localStorage.getItem('expires'));
+    if (expired === null) return;
+    else {
+      const isLog = isLoggedIn();
+      if (isLog) return;
+      else {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expires');
+        localStorage.setItem('isAuth', 'false');
+        setUser({
+          isAuth: false,
+          msg: '',
+        });
+      }
+    }
+  });
 
   const login = useCallback((user) => {
     axios

@@ -1,6 +1,6 @@
 import { getExpiration } from './getExpiration';
-import moment from 'moment'
+import moment from 'moment';
 
 export function isLoggedIn() {
-  return moment().isBefore(getExpiration());
+  return moment(moment().toDate()).isBefore(getExpiration());
 }
