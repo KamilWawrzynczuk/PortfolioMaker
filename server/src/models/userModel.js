@@ -28,6 +28,10 @@ const userSchema = new Schema({
     type: String,
     default: null,
   },
+  passwordResetCode: {
+    type: String,
+    default: null,
+  },
   changeAt: {
     type: Date,
   },

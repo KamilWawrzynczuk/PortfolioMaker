@@ -5,7 +5,7 @@ import moment from 'moment';
 function RequireAuth({ children }) {
   const location = useLocation();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
-  
+
   // useEffect(() => {
   //   (() => {
   //     const token = localStorage.getItem('token') || '';
@@ -36,6 +36,7 @@ function RequireAuth({ children }) {
   //   })();
   // }, []); // eslint-disable-line
 
+  if (isAuth) return <p>You need to be log in to see this content.</p>;
   if (!isAuth) {
     return <Navigate to='/' state={{ path: location.pathname }} />;
   } else {

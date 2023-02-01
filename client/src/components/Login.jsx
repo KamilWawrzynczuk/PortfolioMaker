@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import { setLocalStorage } from '../util/setLocalStorage';
 import { useAuth } from '../auth/auth';
@@ -65,7 +65,7 @@ function Login() {
   // }
 
   return (
-    <div className=''>
+    <div className='login-form'>
       <form onSubmit={handleSubmit} className='login-form'>
         <h3>Please Login</h3>
         {auth.contextValue.user.msg && (
@@ -105,6 +105,9 @@ function Login() {
         >
           Log in With Facebook
         </a>
+        <div className='login-forgot-password-link'>
+          <Link to='/users/forgot-password'>Forgot password?</Link>
+        </div>
       </form>
     </div>
   );

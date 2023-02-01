@@ -93,3 +93,16 @@
   border: 1px solid #38599b;
   color: var(--white);
 }
+
+.login-forgot-password-link {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.login-forgot-password-link a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.login-forgot-password-link a:hover {
+  cursor: pointer;
+}

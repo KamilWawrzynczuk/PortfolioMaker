@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }) => {
   //       });
   //   })();
   // }, []); // eslint-disable-line
+  
 
   // Checking if token is valid and if is already expired and then
   // logout user by delate localStorage and
