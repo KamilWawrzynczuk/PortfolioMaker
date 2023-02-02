@@ -33,7 +33,7 @@ function Register() {
           confirmPassword: user.confirmPassword,
         }
       );
-      navigate('/users/login');
+      navigate('/login');
     } catch (error) {
       setErrorMessage(error.response.data.errors[0].msg);
     }

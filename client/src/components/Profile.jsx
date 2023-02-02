@@ -8,7 +8,7 @@ function Profile() {
 
   const handleLogout = () => {
     auth.contextValue.logout();
-    navigate('/users/login')
+    navigate('/users/login');
   };
 
   return (

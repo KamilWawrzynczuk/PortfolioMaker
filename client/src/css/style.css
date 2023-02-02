@@ -7,8 +7,10 @@
 @import './header.css';
 @import './projects.css';
 @import './footer.css';
-@import './media.css';
+@import './user.css';
 @import './login.css';
 @import './form.css';
 @import './error.css';
 @import './emailVerification.css';
+@import './typing_animation.css';
+@import './media.css';

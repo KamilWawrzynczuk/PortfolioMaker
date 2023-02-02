@@ -29,6 +29,7 @@ export function loginUser(req, res, next) {
 
       if (isValid) {
         const tokenObject = issueJWT(user);
+        
         res.status(200).json({
           success: true,
           user_id: user._id,

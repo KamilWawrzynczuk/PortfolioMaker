@@ -1,5 +1,8 @@
-
 @media (min-width: 800px) {
+  .typing-container {
+    flex-direction: row;
+  }
+
   article {
     display: grid;
     grid-template-columns: repeat(10, 1fr);

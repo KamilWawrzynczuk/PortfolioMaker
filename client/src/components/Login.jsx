@@ -13,7 +13,7 @@ function Login() {
   });
 
   const location = useLocation();
-  const redirectPath = location.state?.path || '/';
+  const redirectPath = location.state?.path || '/users';
 
   const navigate = useNavigate();
 
@@ -42,7 +42,6 @@ function Login() {
         navigate(redirectPath, { replace: true });
       })
       .catch((error) => {
-        console.log(error, 'tutaj');
         window.localStorage.setItem('isAuth', 'false');
         auth.contextValue.setUser({
           isAuth: false,

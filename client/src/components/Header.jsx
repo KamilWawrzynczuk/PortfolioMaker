@@ -16,39 +16,27 @@ function Header() {
                   className='fa-solid fa-laptop-code'
                   aria-hidden='true'
                 ></span>
-                <Link to='/'>
-                  <span>Portfolio Creator</span>
-                </Link>
+                {isAuth ? (
+                  <Link to='/users'>
+                    <span>Portfolio Creator</span>
+                  </Link>
+                ) : (
+                  <Link to='/'>
+                    <span>Portfolio Creator</span>
+                  </Link>
+                )}
               </h1>
             </li>
             {isAuth !== false ? (
               <>
                 <li>
-                  <NavLink
-                    style={({ isActive }) => {
-                      return {
-                        color: isActive ? 'red' : '',
-                      };
-                    }}
-                    to='/'
-                  >
-                    Projects
-                  </NavLink>
+                  <NavLink to='/users/projects'>Projects</NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    style={({ isActive }) => {
-                      return {
-                        color: isActive ? 'pink' : '',
-                      };
-                    }}
-                    to='/'
-                  >
-                    About
-                  </NavLink>
+                  <NavLink to='/users'>About</NavLink>
                 </li>
                 <li>
-                  <Link to='/'>Contact Me</Link>
+                  <Link to='/users'>Contact Me</Link>
                 </li>
                 <li>
                   <Link to='/users/profile'>Profile</Link>
@@ -59,7 +47,7 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to='/'>
+                  <Link to='https://www.linkedin.com/in/kamil-wawrzynczuk/'>
                     <span
                       className='fa-brands fa-linkedin'
                       aria-hidden='true'
@@ -68,7 +56,7 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to='/'>
+                  <Link to='https://github.com/KamilWawrzynczuk'>
                     <i className='fa-brands fa-github' aria-hidden='true'></i>
                     <span className='sr-only'>Github</span>
                   </Link>
@@ -82,10 +70,10 @@ function Header() {
             ) : (
               <>
                 <li>
-                  <Link to='/users/login'>Login</Link>
+                  <Link to='/login'>Login</Link>
                 </li>
                 <li>
-                  <Link to='/users/register'>Register</Link>
+                  <Link to='/register'>Register</Link>
                 </li>
               </>
             )}

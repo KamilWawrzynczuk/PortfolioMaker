@@ -1,10 +1,21 @@
 import React, { useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { isLoggedIn } from '../util/isLoggedIn';
-import moment from 'moment';
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../auth/auth';
+
 function RequireAuth({ children }) {
-  const location = useLocation();
+  const auth = useAuth();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
+
+  // const location = useLocation();
+  // const navigate = useNavigate();
+  // const redirectPath = location.state?.path || '/';
 
   // useEffect(() => {
   //   (() => {
@@ -18,29 +29,43 @@ function RequireAuth({ children }) {
   //         },
   //       })
   //       .then((user) => {
-  //         console.log(user, 'succes w require')
-  //           window.localStorage.setItem('isAuth', 'true')
-  //           auth.contextValue.setUser({
-  //             isAuth: user.data.success,
-  //             msg: '',
-  //           });
+  //         window.localStorage.setItem('isAuth', 'true');
+  //         auth.contextValue.setUser({
+  //           isAuth: user.data.success,
+  //           msg: '',
+  //         });
   //       })
   //       .catch((err) => {
-  //         console.log(err, ' err w require')
-  //           // window.localStorage.setItem('isAuth', 'false')
-  //           // auth.contextValue.setUser({
-  //           //   isAuth: err.response.data.success,
-  //           //   msg: '',
-  //           // });
+  //         window.localStorage.setItem('isAuth', 'false');
+  //         auth.contextValue.setUser({
+  //           isAuth: err.response.data.success,
+  //           msg: '',
+  //         });
   //       });
   //   })();
   // }, []); // eslint-disable-line
 
-  if (isAuth) return <p>You need to be log in to see this content.</p>;
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigate(redirectPath, { replace: true });
+  //   }, 3000);
+  // }, [redirectPath]);
+
+  if (!isAuth)
+    return (
+      <section id='intro'>
+        <div>
+          <h2>You are logged out.</h2>
+          <p>
+            Click <Link to='/'>here</Link> to go to home page.
+          </p>
+        </div>
+      </section>
+    );
   if (!isAuth) {
     return <Navigate to='/' state={{ path: location.pathname }} />;
   } else {
-    return children;
+    return <Outlet />;
   }
 }
 

@@ -1,0 +1,6 @@
+.user-name span {
+  font-family: var(--sans);
+  font-size: 2rem;
+  color: var(--aqua);
+  font-weight: 300;
+}

@@ -66,6 +66,7 @@ export function issueJWT(user) {
     algorithm: 'RS256',
   });
 
+
   return {
     token: 'Bearer ' + signedToken,
     expires: expiresIn,

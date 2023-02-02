@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { PasswordResetSuccess } from './PasswordResetSuccess';
-import { PasswordResetFail } from './PasswordResetFail';
 import { useAuth } from '../auth/auth';
 
 function PasswordResetLandingPage() {

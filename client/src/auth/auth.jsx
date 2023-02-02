@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useMemo } from 'react';
 import { setLocalStorage } from '../util/setLocalStorage';
 import { useCallback } from 'react';
-import { isLoggedIn } from '../util/isLoggedIn';
+import { isTokenExpire } from '../util/isTokenExpire';
+import { useLocation } from 'react-router-dom';
 const AuthContext = createContext(null);
 
 const initialValue = {
@@ -14,6 +15,8 @@ const initialValue = {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(initialValue);
+
+
 
   // useEffect(() => {
   //   (() => {
@@ -58,13 +61,13 @@ export const AuthProvider = ({ children }) => {
   //       });
   //   })();
   // }, []); // eslint-disable-line
-  
 
   // Checking if token is valid and if is already expired and then
   // logout user by delate localStorage and
   // changing isAuth to false
+
   useEffect(() => {
-    const isLog = isLoggedIn();
+    const isLog = isTokenExpire();
     if (isLog) {
       (() => {
         const token = localStorage.getItem('token');
@@ -95,6 +98,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('token');
       localStorage.removeItem('expires');
       localStorage.setItem('isAuth', 'false');
+      localStorage.removeItem('user_id');
       setUser({
         isAuth: false,
         msg: '',
@@ -136,6 +140,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('expires');
         localStorage.setItem('isAuth', 'false');
+        localStorage.removeItem('user_id');
         setUser({
           isAuth: false,
           msg: '',
