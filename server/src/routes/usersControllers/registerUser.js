@@ -46,7 +46,7 @@ export async function registerUser(req, res, next) {
         subject: 'Please verify your email',
         text: `
             Thanks for signing up! To verify your email, click here:
-            http://localhost:5173/verify-email/${user.verificationString}
+            http://localhost:5173/users/verify-email/${user.verificationString}
         `,
       });
 

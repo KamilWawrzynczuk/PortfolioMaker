@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { useState } from 'react';
 import { useAuth } from '../auth/auth';
 import { isLogin } from '../util/isLogin';
+import UserWebsite from './Website';
 
 function User() {
   const auth = useAuth();
   const [user, setUser] = useState();
+
 
   useEffect(() => {
     const token = localStorage.getItem('token') || '';
@@ -40,17 +41,17 @@ function User() {
 
   return (
     <>
-      <section id='intro'>
+      <section id='user-intro'>
         <p className='user-name'>
           Hi, <span>{user}</span>{' '}
         </p>
-        <p> This is your Portfolio Creator account.</p>
         <p>
-          If you want to change your users data <Link>click here</Link>.
+          {' '}
+          This is your Portfolio Creator account. <br />
+          Click on elements to edit them. To see your website, click here.
         </p>
-        <p>or go and edit your personal website</p>
       </section>
-      <Outlet />
+      <UserWebsite />
     </>
   );
 }

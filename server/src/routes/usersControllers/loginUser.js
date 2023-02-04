@@ -16,10 +16,9 @@ export function loginUser(req, res, next) {
           .json({ success: false, msg: 'Password or email are incorrect.' });
       }
 
-      // LATER TO UNCOMMENT
-      // if (!user.isVerified) {
-      //   return res.status(401).json({ success: false, msg: 'Your email is not verified.' });
-      // }
+      if (!user.isVerified) {
+        return res.status(401).json({ success: false, msg: 'Your email is not verified.' });
+      }
 
       const isValid = validPassword(
         String(req.body.password),

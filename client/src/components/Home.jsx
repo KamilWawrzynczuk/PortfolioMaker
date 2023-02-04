@@ -75,12 +75,10 @@ function Home() {
   return (
     <>
       <section id='intro'>
-        <p className='name'>
-          Hi, my name is <span>John Doe</span>
-        </p>
-
+        <p className='name'>Hi, my name is</p>
+        <span class='name-span'>John Doe</span>
         <div className='typing-container'>
-          <h2>I am </h2>
+          <h2>I am</h2>
           <div className='heading-and-cursor'>
             <h2 id='feature-text' ref={spanElement}></h2>
             <span className='input-cursor'></span>

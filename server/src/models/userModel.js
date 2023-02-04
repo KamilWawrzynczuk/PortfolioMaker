@@ -12,7 +12,7 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    // required: [true, 'Email is required.'],
+    required: [true, 'Email is required.'],
     unique: [true, 'This email is already in use.'],
     lowercase: true,
   },

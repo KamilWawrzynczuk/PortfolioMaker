@@ -1,0 +1,86 @@
+.click-area {
+  cursor: pointer;
+  transition: all 1s;
+}
+
+.edit-area {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.edit-form {
+  position: relative;
+  max-width: 680px;
+  background: #fff;
+  margin-bottom: 2rem;
+  padding: 15px;
+  border-radius: 7px;
+  box-shadow: 0 1px 5px rgb(138, 137, 137);
+  animation: hide 0.2s ease-out;
+}
+
+.edit-button {
+  background-color: var(--magenta);
+  color: white;
+  padding: 0.3rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: var(--mono);
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  color: white;
+  background-color: var(--hotmag);
+}
+
+@keyframes hide {
+  0% {
+    opacity: 0;
+    display: none;
+    height: 0%;
+  }
+  100% {
+    opacity: 1;
+    display: block;
+    height: 100%;
+  }
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  border: none;
+  padding: 4px;
+  outline: none;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: none;
+}
+
+.edit-form button {
+  position: absolute;
+  right: 18px;
+  bottom: -13px;
+  background: var(--magenta);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  outline: none;
+  animation: zoom 0.2s ease-out;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

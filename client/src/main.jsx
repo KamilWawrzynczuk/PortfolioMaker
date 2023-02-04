@@ -5,15 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import './css/style.css';
 import ErrorBoundary from './errorBoundary/ErrorBoundary';
 import { AuthProvider } from './auth/auth';
+import UserContext from './context/UserContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
- 
-    <BrowserRouter>
-      <ErrorBoundary>
-        <AuthProvider>
+  <BrowserRouter>
+    <ErrorBoundary>
+      <AuthProvider>
+        <UserContext>
           <App />
-        </AuthProvider>
-      </ErrorBoundary>
-    </BrowserRouter>
-
+        </UserContext>
+      </AuthProvider>
+    </ErrorBoundary>
+  </BrowserRouter>
 );

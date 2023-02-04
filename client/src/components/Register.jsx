@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
   const [user, setUser] = useState({
@@ -12,6 +12,7 @@ function Register() {
   });
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,79 +34,88 @@ function Register() {
           confirmPassword: user.confirmPassword,
         }
       );
-      navigate('/login');
+      setIsSuccess(true);
     } catch (error) {
       setErrorMessage(error.response.data.errors[0].msg);
     }
   }
 
-  return (
+  return isSuccess ? (
+    <div className='login-form'>
+      <h2>Success</h2>
+      <p>We have sent you email with verification link.</p>
+      <p>
+        Click <Link to='/'>here</Link> o go back to home page <br />
+        or <Link to='/login'>login</Link>
+      </p>
+    </div>
+  ) : (
     <>
-      <div className="">
-        <form onSubmit={handleSubmit} className="login-form">
+      <div className=''>
+        <form onSubmit={handleSubmit} className='login-form'>
           <h3>Please Register</h3>
-          {errorMessage && <div className="error">{errorMessage}</div>}
-          <label className="login-label" htmlFor="fName">
+          {errorMessage && <div className='error'>{errorMessage}</div>}
+          <label className='login-label' htmlFor='fName'>
             First Name
           </label>
           <input
             onChange={handleChange}
             value={user.fName}
-            className="login-input"
-            type="text"
-            placeholder="Firs Name"
-            name="fName"
-            id="fName"
+            className='login-input'
+            type='text'
+            placeholder='Firs Name'
+            name='fName'
+            id='fName'
           />
-          <label className="login-label" htmlFor="lName">
+          <label className='login-label' htmlFor='lName'>
             Last Name
           </label>
           <input
-            className="login-input"
-            type="text"
-            placeholder="Name"
-            name="lName"
-            id="lName"
+            className='login-input'
+            type='text'
+            placeholder='Name'
+            name='lName'
+            id='lName'
             value={user.lName}
             onChange={handleChange}
           />
-          <label className="login-label" htmlFor="email">
+          <label className='login-label' htmlFor='email'>
             Email
           </label>
           <input
-            className="login-input"
-            type="text"
-            placeholder="Email"
-            name="email"
-            id="email"
+            className='login-input'
+            type='text'
+            placeholder='Email'
+            name='email'
+            id='email'
             value={user.email}
             onChange={handleChange}
           />
-          <label className="login-label" htmlFor="password">
+          <label className='login-label' htmlFor='password'>
             Password
           </label>
           <input
-            className="login-input"
-            type="password"
-            placeholder="Password"
-            name="password"
-            id="password"
+            className='login-input'
+            type='password'
+            placeholder='Password'
+            name='password'
+            id='password'
             value={user.password}
             onChange={handleChange}
           />
-          <label className="login-label" htmlFor="confirmPassword">
+          <label className='login-label' htmlFor='confirmPassword'>
             Confirm Password
           </label>
           <input
-            className="login-input"
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            id="confirmPassword"
+            className='login-input'
+            type='password'
+            placeholder='Confirm Password'
+            name='confirmPassword'
+            id='confirmPassword'
             value={user.confirmPassword}
             onChange={handleChange}
           />
-          <button type="submit" className="login-button">
+          <button type='submit' className='login-button'>
             Register
           </button>
         </form>

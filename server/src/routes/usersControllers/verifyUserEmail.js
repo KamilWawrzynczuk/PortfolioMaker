@@ -9,7 +9,10 @@ export async function verifyUserEmail(req, res, next) {
     if (!user) {
       return res
         .status(401)
-        .json({ msg: 'The email verification code is incorrect.' });
+        .json({
+          success: false,
+          msg: 'The email verification code is incorrect.',
+        });
     }
 
     const { _id: id } = user;
@@ -19,7 +22,7 @@ export async function verifyUserEmail(req, res, next) {
       { $set: { isVerified: true } },
       { $unset: { verificationString } }
     );
-    res.status(200).json({ msg: 'Email verified successfully.' });
+    res.status(200).json({success: true, msg: 'Email verified successfully.' });
   } catch (error) {
     next(error);
   }

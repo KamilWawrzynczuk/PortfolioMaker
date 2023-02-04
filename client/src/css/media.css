@@ -38,6 +38,14 @@
   #projects .reverse ul {
     justify-content: flex-start;
   }
+
+  .user-intro-img {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: space-between;
+    gap: 5%;
+  }
 }
 @media (min-width: 850px) {
   nav {

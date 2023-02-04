@@ -1,55 +1,10 @@
-import React, { useEffect } from 'react';
-import {
-  Link,
-  Navigate,
-  Outlet,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
-import axios from 'axios';
-import { useAuth } from '../auth/auth';
+import React from 'react';
+import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 
 function RequireAuth({ children }) {
-  const auth = useAuth();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
 
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // const redirectPath = location.state?.path || '/';
-
-  // useEffect(() => {
-  //   (() => {
-  //     const token = localStorage.getItem('token') || '';
-  //     axios
-  //       // This address will change depends on PORT
-  //       // you are using or after uploading
-  //       .get('http://localhost:8080/protected', {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       })
-  //       .then((user) => {
-  //         window.localStorage.setItem('isAuth', 'true');
-  //         auth.contextValue.setUser({
-  //           isAuth: user.data.success,
-  //           msg: '',
-  //         });
-  //       })
-  //       .catch((err) => {
-  //         window.localStorage.setItem('isAuth', 'false');
-  //         auth.contextValue.setUser({
-  //           isAuth: err.response.data.success,
-  //           msg: '',
-  //         });
-  //       });
-  //   })();
-  // }, []); // eslint-disable-line
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigate(redirectPath, { replace: true });
-  //   }, 3000);
-  // }, [redirectPath]);
+  const location = useLocation();
 
   if (!isAuth)
     return (
