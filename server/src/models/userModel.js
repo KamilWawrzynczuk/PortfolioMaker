@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import findOrCreate from 'mongoose-findorcreate';
+import IntroData from './introDataModel.js';
 
 const userSchema = new Schema({
   fName: {
@@ -31,6 +32,10 @@ const userSchema = new Schema({
   passwordResetCode: {
     type: String,
     default: null,
+  },
+  introData: {
+    type: Schema.Types.ObjectId,
+    ref: 'Intro',
   },
   changeAt: {
     type: Date,

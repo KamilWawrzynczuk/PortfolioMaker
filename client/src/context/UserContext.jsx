@@ -1,26 +1,31 @@
 import React, { createContext, useReducer } from 'react';
-
+import axios from 'axios';
 export const userContext = createContext();
 
-const initialValue = {
-  intro: {
-    greeting: 'Hi, my name is',
-    name: 'Kamil Wawrzyńczuk',
-    header: 'I am a Developer',
-    specialty: `I'm a student specializing in HTML, CSS, JavaScript,UX`,
-    current: `Currently, I'm at Bootcamp at DCI`,
-  },
-  cart: [],
-  isLoading: true,
-};
+let initialValue;
+
+
+
+if (localStorage.getItem('userState') === null) {
+  initialValue = {
+    intro: {
+      greeting: 'Hi, my name is',
+      name: 'Kamil Wawrzyńczuk',
+      header: 'I am a Developer',
+      specialty: `I'm a student specializing in HTML, CSS, JavaScript,UX`,
+      current: `Currently, I'm at Bootcamp at DCI`,
+    },
+  };
+} else {
+  initialValue = JSON.parse(localStorage.getItem('userState'));
+}
 
 function reducer(state, action) {
   switch (action.type) {
     case 'INTRO':
-      console.log(action.payload);
       return {
         ...state,
-        intro: {...action.payload }
+        intro: { ...state.intro, ...action.payload },
       };
     case 'INTRO_NAME':
       return {

@@ -9,6 +9,7 @@ import { forgotPasswordSendEmail } from './usersControllers/forgotPasswordSendEm
 import { resetUserPassword } from './usersControllers/resetUserPassword.js';
 import { getOneUser } from './usersControllers/getOneUser.js';
 import { authMiddleware } from '../util/utils.js';
+import { addIntroData } from './usersControllers/addIntroData.js';
 
 
 export const usersRoute = Router();
@@ -37,3 +38,5 @@ usersRoute.patch(
   resetPasswordValidationMiddleware,
   resetUserPassword
 );
+
+usersRoute.patch('/addIntroData', addIntroData)

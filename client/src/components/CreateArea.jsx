@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useRef } from 'react';
+import axios from 'axios';
 import { useEffect } from 'react';
 import { userContext } from '../context/UserContext';
 function CreateArea(props) {
@@ -25,8 +26,34 @@ function CreateArea(props) {
   function submitNote(event) {
     event.preventDefault();
     props.setIsClicked(!props.isClicked);
-    dispatchUserState({ type: 'INTRO', payload: note });
+    dispatchUserState({
+      type: 'INTRO',
+      payload: {
+        greeting:
+          note.greeting.length > 0 ? note.greeting : userState.intro.greeting,
+        name: note.name.length > 0 ? note.name : userState.intro.name,
+        header: note.header.length > 0 ? note.header : userState.intro.header,
+        specialty:
+          note.specialty.length > 0
+            ? note.specialty
+            : userState.intro.specialty,
+        current:
+          note.current.length > 0 ? note.current : userState.intro.current,
+      },
+    });
+
+    const userId = localStorage.getItem('user_id')
+    axios
+      .patch('http://localhost:8080/users/addIntroData', { data: userState.intro, userId})
+      .then((respond) => {
+        console.log(respond.data.msg);
+      })
+      .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    localStorage.setItem('userState', JSON.stringify(userState));
+  }, [userState]);
 
   return (
     <div className='create-area'>
@@ -35,35 +62,30 @@ function CreateArea(props) {
           <textarea
             name='greeting'
             onChange={handleChange}
-            value={note.greeting}
             placeholder={userState.intro.greeting}
             rows='1'
           />
           <textarea
             name='name'
             onChange={handleChange}
-            value={note.name}
             placeholder={userState.intro.name}
             rows='1'
           />
           <textarea
             name='header'
             onChange={handleChange}
-            value={note.header}
             placeholder={userState.intro.header}
             rows='1'
           />
           <textarea
             name='specialty'
             onChange={handleChange}
-            value={note.specialty}
             placeholder={userState.intro.specialty}
             rows='1'
           />
           <textarea
             name='current'
             onChange={handleChange}
-            value={note.current}
             placeholder={userState.intro.current}
             rows='1'
           />
