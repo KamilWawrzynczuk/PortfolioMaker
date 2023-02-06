@@ -3,47 +3,28 @@ import IntroData from '../../models/introDataModel.js';
 
 export const addIntroData = async (req, res, next) => {
   const { data, userId } = req.body;
+
+  console.log(data, ' w add data');
+
   try {
     const { _id } = await User.findById(userId);
-    const oldIntroData = await IntroData.findOne({ userId: _id });
-    let introData;
-
-    if (oldIntroData !== null) {
-      introData = await IntroData.findByIdAndUpdate(
-        _id,
-        {
-          $set: {
-            userId: _id,
-            greeting: data.greeting,
-            name: data.name,
-            header: data.header,
-            specialty: data.specialty,
-            current: data.current,
+    const introData = await IntroData.findOneAndUpdate(
+      { userId: _id },
+      {
+        $set: {
+          intro: {
+            greeting: data.intro.greeting,
+            name: data.intro.name,
+            header: data.intro.header,
+            specialty: data.intro.specialty,
+            current: data.intro.current,
           },
         },
-        { new: true }
-      );
-      return res.status(200).json({ success: true, msg: 'Intro data added.' });
-    } else {
-      introData = await IntroData.create({
-        userId: _id,
-        greeting: data.greeting,
-        name: data.name,
-        header: data.header,
-        specialty: data.specialty,
-        current: data.current,
-      });
-
-      const userToUpdate = await User.findByIdAndUpdate(
-        _id,
-        {
-          $set: { introData: introData._id },
-        },
-        { new: true }
-      );
-
-      res.status(200).json({ success: true, msg: 'Intro data added.' });
-    }
+      },
+      { new: true }
+    );
+    console.log(introData, ' w petli w add data');
+    return res.status(200).json({ success: true, msg: 'Intro data updated.' });
   } catch (err) {
     next(err);
   }

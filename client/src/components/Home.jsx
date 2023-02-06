@@ -3,8 +3,17 @@ import portfolioImg from '../img/portfolio.png';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import Line from './Line';
+import axios from 'axios';
+import { useContext } from 'react';
+import { userContext } from '../context/UserContext';
+import { setLocalStorage } from '../util/setLocalStorage';
+import { isTokenExpire } from '../util/isTokenExpire';
+import { useAuth } from '../auth/auth';
+
 function Home() {
   const spanElement = useRef();
+  const { userState, dispatchUserState } = useContext(userContext);
+  const auth = useAuth();
 
   function goToTopOfPage() {
     window.scrollTo({
@@ -72,11 +81,32 @@ function Home() {
     carousel(carouselText, spanElement.current);
   }, []);
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('user_id') !== null) {
+  //     const user_id = localStorage.getItem('user_id');
+  //     axios
+  //       .post('http://localhost:8080/users/getUserData', { user_id })
+  //       .then((userData) => {
+  //         dispatchUserState({
+  //           type: 'INTRO',
+  //           payload: userData.data.userDataFromDb,
+  //         });
+  //         localStorage.setItem(
+  //           'userState',
+  //           JSON.stringify(userData.data.userDataFromDb)
+  //         );
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }, [auth]);
+
   return (
     <>
       <section id='intro'>
         <p className='name'>Hi, my name is</p>
-        <span class='name-span'>John Doe</span>
+        <span className='name-span'>John Doe</span>
         <div className='typing-container'>
           <h2>I am</h2>
           <div className='heading-and-cursor'>

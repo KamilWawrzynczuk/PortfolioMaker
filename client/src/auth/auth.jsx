@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('expires');
       localStorage.setItem('isAuth', 'false');
       localStorage.removeItem('user_id');
+      localStorage.removeItem('userState')
       setUser({
         isAuth: false,
         msg: '',
@@ -95,6 +96,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('expires');
         localStorage.setItem('isAuth', 'false');
         localStorage.removeItem('user_id');
+        localStorage.removeItem('userState')
         setUser({
           isAuth: false,
           msg: '',

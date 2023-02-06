@@ -10,6 +10,7 @@ import { resetUserPassword } from './usersControllers/resetUserPassword.js';
 import { getOneUser } from './usersControllers/getOneUser.js';
 import { authMiddleware } from '../util/utils.js';
 import { addIntroData } from './usersControllers/addIntroData.js';
+import { getUserData } from './usersControllers/getUserData.js';
 
 
 export const usersRoute = Router();
@@ -39,4 +40,8 @@ usersRoute.patch(
   resetUserPassword
 );
 
+// PATCH put user data intro database
 usersRoute.patch('/addIntroData', addIntroData)
+
+// GET user data from database
+usersRoute.post('/getUserData', getUserData)

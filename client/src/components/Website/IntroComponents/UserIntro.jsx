@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 function UserIntro() {
 
-  const { userState, dispatchUserState } = useContext(userContext);
+  const {userState} = useContext(userContext);
   const [isClicked, setIsClicked] = useState(true);
 
   function handleClick() {

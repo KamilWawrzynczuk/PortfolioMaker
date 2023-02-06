@@ -7,18 +7,21 @@ function CreateArea(props) {
   const { userState, dispatchUserState } = useContext(userContext);
 
   const [note, setNote] = useState({
-    greeting: '',
-    name: '',
-    header: '',
-    specialty: '',
-    current: '',
+    intro: {
+      greeting: userState.intro.greeting,
+      name: userState.intro.name,
+      header: userState.intro.header,
+      specialty: userState.intro.specialty,
+      current: userState.intro.current,
+    },
   });
+
   function handleChange(event) {
     const { name, value } = event.target;
     setNote((prevNote) => {
       return {
         ...prevNote,
-        [name]: value,
+        intro: { ...prevNote.intro,  [name]: value },
       };
     });
   }
@@ -26,34 +29,69 @@ function CreateArea(props) {
   function submitNote(event) {
     event.preventDefault();
     props.setIsClicked(!props.isClicked);
-    dispatchUserState({
-      type: 'INTRO',
-      payload: {
-        greeting:
-          note.greeting.length > 0 ? note.greeting : userState.intro.greeting,
-        name: note.name.length > 0 ? note.name : userState.intro.name,
-        header: note.header.length > 0 ? note.header : userState.intro.header,
-        specialty:
-          note.specialty.length > 0
-            ? note.specialty
-            : userState.intro.specialty,
-        current:
-          note.current.length > 0 ? note.current : userState.intro.current,
-      },
-    });
 
-    const userId = localStorage.getItem('user_id')
+    const userId = localStorage.getItem('user_id');
     axios
-      .patch('http://localhost:8080/users/addIntroData', { data: userState.intro, userId})
+      .patch('http://localhost:8080/users/addIntroData', {
+        data: note,
+        userId,
+      })
       .then((respond) => {
-        console.log(respond.data.msg);
+        dispatchUserState({
+          type: 'INTRO',
+          payload: {
+            greeting:
+              note.intro.greeting.length > 0
+                ? note.intro.greeting
+                : userState.intro.greeting,
+            name:
+              note.intro.name.length > 0
+                ? note.intro.name
+                : userState.intro.name,
+            header:
+              note.intro.header.length > 0
+                ? note.intro.header
+                : userState.intro.header,
+            specialty:
+              note.intro.specialty.length > 0
+                ? note.intro.specialty
+                : userState.intro.specialty,
+            current:
+              note.intro.current.length > 0
+                ? note.intro.current
+                : userState.intro.current,
+          },
+        });
       })
       .catch((err) => console.log(err));
   }
 
   useEffect(() => {
-    localStorage.setItem('userState', JSON.stringify(userState));
-  }, [userState]);
+    if (localStorage.getItem('user_id') !== null) {
+      const user_id = localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getUserData', { user_id })
+        .then((userData) => {
+          console.log(userData.data.userDataFromDb, ' w create area');
+          dispatchUserState({
+            type: 'INTRO',
+            payload: userData.data.userDataFromDb,
+          });
+          console.log(userData, ' w create area use effect')
+          localStorage.setItem(
+            'userState',
+            JSON.stringify(userData.data.userDataFromDb)
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('userState', JSON.stringify(userState));
+  // }, []);
 
   return (
     <div className='create-area'>
