@@ -32,6 +32,18 @@
   font-family: var(--mono);
   cursor: pointer;
 }
+.edit-button-delete {
+  margin: 0 1rem;
+}
+
+.edit-button-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .6rem 1.2rem .6rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
 
 .edit-button:hover {
   color: white;

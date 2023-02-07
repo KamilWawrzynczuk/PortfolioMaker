@@ -13,6 +13,7 @@ import { addIntroData } from './usersControllers/addIntroData.js';
 import { getUserData } from './usersControllers/getUserData.js';
 import { getUserProjectsData } from './usersControllers/getUserProjectsData.js';
 import { addProjectData } from './usersControllers/addProjectData.js';
+import { deleteOneProject } from './usersControllers/deleteOneProject.js';
 
 export const usersRoute = Router();
 
@@ -52,3 +53,6 @@ usersRoute.post('/getUserData', getUserData);
 
 // GET user projects from database
 usersRoute.post('/getUserProjects', getUserProjectsData);
+
+// Delete ONE project
+usersRoute.delete('/deleteOneProject/:projectId', deleteOneProject)

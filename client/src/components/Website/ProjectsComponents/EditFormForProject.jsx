@@ -5,14 +5,21 @@ import { userProjectsContext } from '../../../context/UserProjectsContext';
 
 function EditFormForProject(props) {
   const { userState, dispatchUserState } = useContext(userProjectsContext);
-  const [note, setNote] = useState({
-    subtitle: userState[0].subtitle,
-    title: userState[0].title,
-    description: userState[0].description,
-    secondSubtitle: userState[0].secondSubtitle,
-    list: userState[0].list,
-    image: userState[0].image,
-  });
+
+  const currentProject = userState.filter((project => {
+    if (project._id === props.projectId) {
+      return {
+        subtitle: project.subtitle,
+        title: project.title,
+        description: project.description,
+        secondSubtitle: project.secondSubtitle,
+        list: project.list,
+        image: project.image,
+      }
+    }
+  }))
+
+  const [note, setNote] = useState(...currentProject);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -35,26 +42,30 @@ function EditFormForProject(props) {
         userId,
         projectId: props.projectId,
       })
-      .then((respond) => {
-        console.log(respond, ' w submit note edit form');
+      .then((projectsData) => {
+
         dispatchUserState({
           type: 'PROJECTS',
-          payload: {
-            projectId: response.data.projectId,
-            subtitle:
-              note.subtitle.length > 0 ? note.subtitle : userState[0].subtitle,
-            title: note.title.length > 0 ? note.title : userState[0].title,
-            description:
-              note.description.length > 0
-                ? note.description
-                : userState[0].description,
-            secondSubtitle:
-              note.secondSubtitle.length > 0
-                ? note.secondSubtitle
-                : userState[0].secondSubtitle,
-            list: note.list.length > 0 ? note.list : userState[0].list,
-            image: note.image.length > 0 ? note.image : userState[0].image,
-          },
+          payload: [
+            {
+              projectId: projectsData.data.userData.projectId,
+              subtitle:
+                note.subtitle.length > 0
+                  ? note.subtitle
+                  : currentProject[0].subtitle,
+              title: note.title.length > 0 ? note.title : currentProject[0].title,
+              description:
+                note.description.length > 0
+                  ? note.description
+                  : currentProject[0].description,
+              secondSubtitle:
+                note.secondSubtitle.length > 0
+                  ? note.secondSubtitle
+                  : currentProject[0].secondSubtitle,
+              list: note.list.length > 0 ? note.list : currentProject[0].list,
+              image: note.image.length > 0 ? note.image : currentProject[0].image,
+            },
+          ],
         });
       })
       .catch((err) => console.log(err));
@@ -66,6 +77,7 @@ function EditFormForProject(props) {
       axios
         .post('http://localhost:8080/users/getUserProjects', { user_id })
         .then((userData) => {
+    
           dispatchUserState({
             type: 'PROJECTS',
             payload: userData.data.projects,
@@ -82,9 +94,9 @@ function EditFormForProject(props) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem('userState', JSON.stringify(userState));
-  // }, []);
+  useEffect(() => {
+    localStorage.setItem('userState', JSON.stringify(userState));
+  }, []);
 
   return (
     <div className='create-area create-area-form'>
@@ -93,31 +105,31 @@ function EditFormForProject(props) {
           <textarea
             name='subtitle'
             onChange={handleChange}
-            placeholder={userState[0].subtitle}
+            placeholder={note.subtitle}
             rows='1'
           />
           <textarea
             name='title'
             onChange={handleChange}
-            placeholder={userState[0].title}
+            placeholder={note.title}
             rows='1'
           />
           <textarea
             name='description'
             onChange={handleChange}
-            placeholder={userState[0].description}
+            placeholder={note.description}
             rows='4'
           />
           <textarea
             name='secondSubtitle'
             onChange={handleChange}
-            placeholder={userState[0].secondSubtitle}
+            placeholder={note.secondSubtitle}
             rows='1'
           />
           <textarea
             name='list'
             onChange={handleChange}
-            placeholder={userState[0].list}
+            placeholder={note.list}
             rows='1'
           />
           <button className='edit-button' onClick={submitNote}>

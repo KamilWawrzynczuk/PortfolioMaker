@@ -24,7 +24,6 @@ function Single(props) {
 
   return (
     <>
-      <div>Hallo</div>
       <article className={direction}>
         <div className='text'>
           <h4>{subtitle}</h4>

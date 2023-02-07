@@ -2,6 +2,13 @@
 #projects {
   padding: 4rem 1rem;
 }
+.edit-button-div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 1rem;
+}
 #projects h2 {
   font-size: 2.5rem;
   margin-bottom: calc(2.5rem * 1.5);
