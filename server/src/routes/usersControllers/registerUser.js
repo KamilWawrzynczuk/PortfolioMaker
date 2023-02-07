@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { genPassword, issueJWT } from '../../util/utils.js';
 import { validationResult } from 'express-validator';
 import IntroData from '../../models/introDataModel.js';
+import SingleProjectData from '../../models/projectsDataModel.js';
 
 export async function registerUser(req, res, next) {
   const { password, confirmPassword } = req.body;
@@ -56,14 +57,18 @@ export async function registerUser(req, res, next) {
         userId: user._id,
       });
 
-      const userToUpdate = await User.findByIdAndUpdate(
-        user._id,
-        {
-          $set: { introData: introData._id },
-        },
-        { new: true }
-      );
-      
+      const singleProject = await SingleProjectData.create({
+        userId: user._id,
+      });
+
+      // const userToUpdate = await User.findByIdAndUpdate(
+      //   user._id,
+      //   {
+      //     $set: { introData: introData._id },
+      //   },
+      //   { new: true }
+      // );
+
       // create and send JWT token to user
       const jwt = issueJWT(user);
       res.status(200).json({

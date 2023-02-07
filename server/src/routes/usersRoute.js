@@ -11,12 +11,13 @@ import { getOneUser } from './usersControllers/getOneUser.js';
 import { authMiddleware } from '../util/utils.js';
 import { addIntroData } from './usersControllers/addIntroData.js';
 import { getUserData } from './usersControllers/getUserData.js';
-
+import { getUserProjectsData } from './usersControllers/getUserProjectsData.js';
+import { addProjectData } from './usersControllers/addProjectData.js';
 
 export const usersRoute = Router();
 
 // GET one user
-usersRoute.get('/getOne/:user_id', authMiddleware,  getOneUser);
+usersRoute.get('/getOne/:user_id', authMiddleware, getOneUser);
 
 // POST LOGIN
 usersRoute.post('/login', loginUser);
@@ -41,7 +42,13 @@ usersRoute.patch(
 );
 
 // PATCH put user data intro database
-usersRoute.patch('/addIntroData', addIntroData)
+usersRoute.patch('/addIntroData', addIntroData);
+
+// PATCH user projects data
+usersRoute.patch('/addProjectData', addProjectData);
 
 // GET user data from database
-usersRoute.post('/getUserData', getUserData)
+usersRoute.post('/getUserData', getUserData);
+
+// GET user projects from database
+usersRoute.post('/getUserProjects', getUserProjectsData);
