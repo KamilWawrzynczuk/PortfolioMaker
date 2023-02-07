@@ -36,6 +36,7 @@ function Register() {
       );
       setIsSuccess(true);
     } catch (error) {
+      console.log(error);
       setErrorMessage(error.response.data.errors[0].msg);
     }
   }

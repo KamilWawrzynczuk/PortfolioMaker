@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Line from './Line';
 import axios from 'axios';
 import { useContext } from 'react';
-import { userContext } from '../context/UserContext';
+import { userContext } from '../context/UserIntroContext';
 import { setLocalStorage } from '../util/setLocalStorage';
 import { isTokenExpire } from '../util/isTokenExpire';
 import { useAuth } from '../auth/auth';

@@ -10,10 +10,8 @@ import Footer from './components/Footer';
 import RequireAuth from './components/RequireAuth';
 import ForgotPasswordPage from './components/ForgotPasswordPage';
 import PasswordResetLandingPage from './components/PasswordResetLandingPage';
-import Projects from './components/Projects';
 import { EmailVerificationLandingPage } from './components/EmailVerificationLandingPage';
 import Line from './components/Line';
-import UserWebsite from './components/Website';
 
 function App() {
   return (

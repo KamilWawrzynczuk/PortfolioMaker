@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { useRef } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { userContext } from '../context/UserContext';
+import { userContext } from '../../../context/UserIntroContext';
+
 function CreateArea(props) {
   const { userState, dispatchUserState } = useContext(userContext);
 
@@ -21,7 +22,7 @@ function CreateArea(props) {
     setNote((prevNote) => {
       return {
         ...prevNote,
-        intro: { ...prevNote.intro,  [name]: value },
+        intro: { ...prevNote.intro, [name]: value },
       };
     });
   }
@@ -72,12 +73,12 @@ function CreateArea(props) {
       axios
         .post('http://localhost:8080/users/getUserData', { user_id })
         .then((userData) => {
-          console.log(userData.data.userDataFromDb, ' w create area');
+
           dispatchUserState({
             type: 'INTRO',
             payload: userData.data.userDataFromDb,
           });
-          console.log(userData, ' w create area use effect')
+
           localStorage.setItem(
             'userState',
             JSON.stringify(userData.data.userDataFromDb)

@@ -1,7 +1,6 @@
 import express from 'express';
 import { initializeDbConnection } from './db.js';
 import cors from 'cors';
-import { createProxyMiddleware } from 'http-proxy-middleware';
 import session from 'express-session';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';

@@ -11,7 +11,6 @@ export function getUserData(req, res, next) {
           .status(404)
           .json({ success: false, msg: 'Could not find user data with id.' });
       }
-      console.log(userData, '  deguserdata')
       res.status(200).json({
         success: true,
         msg: 'User Data: ',

@@ -1,11 +1,10 @@
 import React, { useRef, useContext } from 'react';
-import CreateArea from '../../CreateArea';
-import { userContext } from '../../../context/UserContext';
+import CreateArea from './CreateArea';
+import { userContext } from '../../../context/UserIntroContext';
 import { useState } from 'react';
 
 function UserIntro() {
-
-  const {userState} = useContext(userContext);
+  const { userState } = useContext(userContext);
   const [isClicked, setIsClicked] = useState(true);
 
   function handleClick() {
