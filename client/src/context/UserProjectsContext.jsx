@@ -3,6 +3,22 @@ import axios from 'axios';
 
 export const userProjectsContext = createContext();
 
+let isDatabaseEmpty;
+
+
+
+console.log(isDatabaseEmpty, ' is empty databse?');
+
+// const isProjectsDbEmpty = axios
+//   .post('http://localhost:8080/users/getUserProjects', { isNotEmpty: true })
+//   .then((res) => {
+//     console.log(res)
+//     return res.data.success;
+//   })
+//   .catch((err) => console.log(err));
+
+// console.log(isProjectsDbEmpty, 'is empty');
+
 let initialValue;
 
 if (localStorage.getItem('userProjectsState') === null) {
@@ -24,8 +40,14 @@ if (localStorage.getItem('userProjectsState') === null) {
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'PROJECTS':
-      return [...action.payload];
+    case 'UPDATE':
+      return [...state, ...action.payload];
+    case 'DELETE':
+      console.log(action.payload, ' w delete context');
+      return state.filter((project) => project._id !== action.payload);
+    case 'ADD':
+      console.log(...action.payload, ' w add');
+      return [...state, ...action.payload];
     default:
       return state;
   }

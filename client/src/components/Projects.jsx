@@ -14,18 +14,18 @@ function Projects() {
         userId,
       })
       .then((newProject) => {
-        
+        console.log(newProject, ' w handleAdd')
         dispatchUserState({
-          type: 'PROJECTS',
+          type: 'ADD',
           payload: [
             {
               projectId: newProject.data.userData.projectId,
-              subtitle: newProject.data.userData.projects.subtitle,
-              title: newProject.data.userData.projects.title,
-              description: newProject.data.userData.projects.description,
-              secondSubtitle: newProject.data.userData.projects.secondSubtitle,
-              list: newProject.data.userData.projects.list,
-              image: newProject.data.userData.projects.image,
+              subtitle: newProject.data.userData.subtitle,
+              title: newProject.data.userData.title,
+              description: newProject.data.userData.description,
+              secondSubtitle: newProject.data.userData.secondSubtitle,
+              list: newProject.data.userData.list,
+              image: newProject.data.userData.image,
             },
           ],
         });

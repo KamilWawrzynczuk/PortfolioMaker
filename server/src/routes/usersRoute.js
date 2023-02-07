@@ -46,13 +46,15 @@ usersRoute.patch(
 usersRoute.patch('/addIntroData', addIntroData);
 
 // PATCH user projects data
-usersRoute.patch('/addProjectData', addProjectData);
+usersRoute.put('/addProjectData', addProjectData);
 
 // GET user data from database
 usersRoute.post('/getUserData', getUserData);
+
+// GET projects
 
 // GET user projects from database
 usersRoute.post('/getUserProjects', getUserProjectsData);
 
 // Delete ONE project
-usersRoute.delete('/deleteOneProject/:projectId', deleteOneProject)
+usersRoute.delete('/deleteOneProject/:projectId', deleteOneProject);

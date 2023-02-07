@@ -1,7 +1,6 @@
 import User from '../../models/userModel.js';
 import SingleProjectData from '../../models/projectsDataModel.js';
 
-
 export const addProjectData = async (req, res, next) => {
   const { data, userId, projectId } = req.body;
 
@@ -13,12 +12,12 @@ export const addProjectData = async (req, res, next) => {
       newProject = await SingleProjectData.create({
         userId: _id,
       });
-
+      console.log(newProject, 'new proje');
       return res.status(200).json({
         success: true,
         msg: 'Project data updated.',
         userData: {
-          projectId,
+         projectId: newProject._id,
           ...newProject.projects,
         },
       });
@@ -41,7 +40,7 @@ export const addProjectData = async (req, res, next) => {
         },
         { new: true }
       );
-
+      console.log(updateProject, 'update');
       return res.status(200).json({
         success: true,
         msg: 'Project data updated.',
