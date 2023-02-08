@@ -21,6 +21,39 @@
   animation: hide 0.2s ease-out;
 }
 
+input[type='file'] {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  white-space: nowrap;
+  width: 1px;
+}
+
+
+.edit-form-project {
+  display: inline;
+}
+
+.edit-input {
+  display: inline;
+}
+
+.edit-label {
+  background-color: var(--magenta);
+  color: white;
+  padding: 0.3rem;
+  font-size: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: var(--mono);
+  cursor: pointer;
+}
+
 .edit-button {
   background-color: var(--magenta);
   color: white;
@@ -40,7 +73,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: .6rem 1.2rem .6rem 1rem;
+  padding: 0.6rem 1.2rem 0.6rem 1rem;
   font-size: 1rem;
   font-weight: bold;
 }
@@ -48,6 +81,14 @@
 .edit-button:hover {
   color: white;
   background-color: var(--hotmag);
+}
+
+.button-upload {
+  margin-left: 2rem;
+}
+
+.edit-span {
+  font-size: 0.9rem;
 }
 
 @keyframes hide {

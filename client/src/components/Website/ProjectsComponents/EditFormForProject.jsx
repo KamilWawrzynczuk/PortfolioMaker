@@ -7,7 +7,7 @@ function EditFormForProject(props) {
   const { userState, dispatchUserState } = useContext(userProjectsContext);
 
   const currentProject = userState.filter((project) => {
-    if (project._id === props.projectId) {
+    if (project.projectId === props.projectId) {
       return {
         subtitle: project.subtitle,
         title: project.title,
@@ -43,10 +43,8 @@ function EditFormForProject(props) {
         projectId: props.projectId,
       })
       .then((updateProject) => {
-        console.log(updateProject, 'updateproject w edit form');
-        console.log(note, ' note w edit');
         dispatchUserState({
-          type: 'UPDATE',
+          type: 'EDIT',
           payload: [
             {
               projectId: updateProject.data.userData.projectId,
@@ -56,22 +54,6 @@ function EditFormForProject(props) {
               secondSubtitle: updateProject.data.userData.secondSubtitle,
               list: updateProject.data.userData.list,
               image: updateProject.data.userData.image,
-              //   note.subtitle.length > 0
-              //     ? note.subtitle
-              //     : currentProject[0].subtitle,
-              // title:
-              //   note.title.length > 0 ? note.title : currentProject[0].title,
-              // description:
-              //   note.description.length > 0
-              //     ? note.description
-              //     : currentProject[0].description,
-              // secondSubtitle:
-              //   note.secondSubtitle.length > 0
-              //     ? note.secondSubtitle
-              //     : currentProject[0].secondSubtitle,
-              // list: note.list.length > 0 ? note.list : currentProject[0].list,
-              // image:
-              //   note.image.length > 0 ? note.image : currentProject[0].image,
             },
           ],
         });
@@ -79,31 +61,8 @@ function EditFormForProject(props) {
       .catch((err) => console.log(err));
   }
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('user_id') !== null) {
-  //     const user_id = localStorage.getItem('user_id');
-  //     axios
-  //       .post('http://localhost:8080/users/getUserProjects', { user_id })
-  //       .then((userData) => {
-
-  //         dispatchUserState({
-  //           type: 'PROJECTS',
-  //           payload: userData.data.projects,
-  //         });
-
-  //         localStorage.setItem(
-  //           'userProjectsState',
-  //           JSON.stringify(userData.data.projects)
-  //         );
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, []);
-
   useEffect(() => {
-    localStorage.setItem('userState', JSON.stringify(userState));
+    localStorage.setItem('userProjectsState', JSON.stringify(userState));
   }, []);
 
   return (
@@ -140,8 +99,9 @@ function EditFormForProject(props) {
             placeholder={note.list}
             rows='1'
           />
+
           <button className='edit-button' onClick={submitNote}>
-            Add
+            Edit
           </button>
         </form>
       )}

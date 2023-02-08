@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { useAuth } from '../auth/auth';
 import { isLogin } from '../util/isLogin';
 import UserWebsite from './Website';
+import { useContext } from 'react';
+import { userProjectsContext } from '../context/UserProjectsContext';
 
 function User() {
   const auth = useAuth();
   const [user, setUser] = useState();
-
+  const { userState, dispatchUserState } = useContext(userProjectsContext);
 
   useEffect(() => {
     const token = localStorage.getItem('token') || '';
@@ -35,6 +37,28 @@ function User() {
             isAuth: err.response.data.success,
             msg: '',
           });
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const user_id = localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getUserProjects', { user_id })
+        .then((userData) => {
+          dispatchUserState({
+            type: 'UPDATE',
+            payload: userData.data.projects,
+          });
+
+          localStorage.setItem(
+            'userProjectsState',
+            JSON.stringify(userData.data.projects)
+          );
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
   }, []);

@@ -41,6 +41,9 @@ app.use(
 // INITIALIZE PASSPORT
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.json({
+  limit: '50mb'
+}));
 
 import('./config/passportConfig.js');
 

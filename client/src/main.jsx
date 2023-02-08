@@ -6,6 +6,7 @@ import ErrorBoundary from './errorBoundary/ErrorBoundary';
 import { AuthProvider } from './auth/auth';
 import UserContext from './context/UserIntroContext';
 import UserProjectsContext from './context/UserProjectsContext';
+
 import './css/style.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <UserContext>
           <UserProjectsContext>
-            <App />
+      
+              <App />
+       
           </UserProjectsContext>
         </UserContext>
       </AuthProvider>

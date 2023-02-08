@@ -16,7 +16,7 @@ export function getUserProjectsData(req, res, next) {
         msg: 'User Project Data: ',
         projects: userData.map((project) => {
           return {
-            _id: project._id,
+            projectId: project._id,
             subtitle: project.projects.subtitle,
             title: project.projects.title,
             description: project.projects.description,

@@ -16,14 +16,12 @@
   #projects img {
     grid-column: 1/6;
     grid-row: 1/2;
-  
   }
   .text {
     grid-column: 5/11;
     grid-row: 1/2;
     order: 2;
     text-align: right;
-
   }
   #projects ul {
     justify-content: flex-end;
@@ -40,6 +38,11 @@
   #projects .reverse .list {
     justify-content: flex-start;
   }
+
+  /* #projects .reverse .button-upload {
+    margin-right: 2rem;
+    background-color: red;
+  } */
 
   .user-intro-img {
     display: flex;

@@ -3,11 +3,9 @@ import axios from 'axios';
 
 export const userProjectsContext = createContext();
 
-let isDatabaseEmpty;
+// let isDatabaseEmpty;
 
-
-
-console.log(isDatabaseEmpty, ' is empty databse?');
+// console.log(isDatabaseEmpty, ' is empty databse?');
 
 // const isProjectsDbEmpty = axios
 //   .post('http://localhost:8080/users/getUserProjects', { isNotEmpty: true })
@@ -19,34 +17,44 @@ console.log(isDatabaseEmpty, ' is empty databse?');
 
 // console.log(isProjectsDbEmpty, 'is empty');
 
-let initialValue;
+let initialValue = [];
 
-if (localStorage.getItem('userProjectsState') === null) {
-  initialValue = [
-    {
-      _id: '',
-      subtitle: 'Latest Project',
-      title: 'Wall of wonder',
-      description:
-        'Description of the project. This should be fairly concise while also describing the key components that you developed or worked on. It can be as long as you need it to be but should at least be a few sentences long. Be sure to include specific links anywhere in the description.',
-      secondSubtitle: 'Technologies used include:',
-      list: 'HTML | CSS | JAVASCRIPT',
-      image: 'https://assets.codepen.io/296057/fem-gettingstartedcss-ch5-1.png',
-    },
-  ];
-} else {
-  initialValue = JSON.parse(localStorage.getItem('userProjectsState'));
-}
+// if (localStorage.getItem('userProjectsState') === null) {
+//   initialValue = [
+//     {
+//       _id: '',
+//       subtitle: 'Latest Project',
+//       title: 'Wall of wonder',
+//       description:
+//         'Description of the project. This should be fairly concise while also describing the key components that you developed or worked on. It can be as long as you need it to be but should at least be a few sentences long. Be sure to include specific links anywhere in the description.',
+//       secondSubtitle: 'Technologies used include:',
+//       list: 'HTML | CSS | JAVASCRIPT',
+//       image: 'https://assets.codepen.io/296057/fem-gettingstartedcss-ch5-1.png',
+//     },
+//   ];
+// } else {
+//   initialValue = JSON.parse(localStorage.getItem('userProjectsState'));
+// }
 
 function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE':
-      return [...state, ...action.payload];
+      console.log(action.payload, 'fire w UPDATE');
+      return [...action.payload];
+    case 'EDIT':
+      console.log(action.payload, 'fire W EDIT');
+      return state.map((ele, index) => {
+        if (ele.projectId === action.payload[0].projectId) {
+          return action.payload[0];
+        } else {
+          return ele;
+        }
+      });
     case 'DELETE':
-      console.log(action.payload, ' w delete context');
-      return state.filter((project) => project._id !== action.payload);
+      console.log(action.payload, ' fire DELETE');
+      return state.filter((project) => project.projectId !== action.payload);
     case 'ADD':
-      console.log(...action.payload, ' w add');
+      console.log(action.payload, 'fire w ADD');
       return [...state, ...action.payload];
     default:
       return state;
@@ -55,29 +63,6 @@ function reducer(state, action) {
 
 function UserProjectsContext({ children }) {
   const [userState, dispatchUserState] = useReducer(reducer, initialValue);
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('user_id') !== null) {
-  //     const user_id = localStorage.getItem('user_id');
-  //     axios
-  //       .post('http://localhost:8080/users/getUserProjects', { user_id })
-  //       .then((userData) => {
-  //         console.log(userData.data.projects, ' w project context use effect before dispatch')
-  //         dispatchUserState({
-  //           type: 'PROJECTS',
-  //           payload: userData.data.projects,
-  //         });
-
-  //         localStorage.setItem(
-  //           'userProjectsState',
-  //           JSON.stringify(userData.data.projects)
-  //         );
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }, []);
 
   return (
     <userProjectsContext.Provider value={{ userState, dispatchUserState }}>

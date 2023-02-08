@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
 import User from './components/User';
@@ -31,7 +31,7 @@ function App() {
           element={<EmailVerificationLandingPage />}
         />
         <Route path='/users' element={<RequireAuth />}>
-          <Route path='/users' element={<User />}></Route>
+          <Route path='/users' element={<User></User>}></Route>
           <Route path='/users/profile' element={<Profile />}></Route>
         </Route>
       </Routes>

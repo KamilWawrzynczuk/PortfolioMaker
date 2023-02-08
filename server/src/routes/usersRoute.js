@@ -14,6 +14,30 @@ import { getUserData } from './usersControllers/getUserData.js';
 import { getUserProjectsData } from './usersControllers/getUserProjectsData.js';
 import { addProjectData } from './usersControllers/addProjectData.js';
 import { deleteOneProject } from './usersControllers/deleteOneProject.js';
+import { addUserImage } from './usersControllers/addUserImage.js';
+
+import multer from 'multer';
+import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+
+// Account access information from CLOUDINARY
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
+
+export async function handleUpload(file) {
+  const res = await cloudinary.uploader.upload(file, {
+    resource_type: 'auto',
+  });
+  return res;
+}
+
+const storage = new multer.memoryStorage();
+const upload = multer({
+  storage,
+});
 
 export const usersRoute = Router();
 
@@ -58,3 +82,10 @@ usersRoute.post('/getUserProjects', getUserProjectsData);
 
 // Delete ONE project
 usersRoute.delete('/deleteOneProject/:projectId', deleteOneProject);
+
+// POST UPLOAD IMAGE
+usersRoute.patch(
+  '/uploadImage/:projectId/:userId',
+  upload.single('image'),
+  addUserImage
+);
