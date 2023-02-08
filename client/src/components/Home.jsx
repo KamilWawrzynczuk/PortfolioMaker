@@ -72,9 +72,9 @@ function Home() {
   }
 
   const carouselText = [
-    { text: 'Web Developer', color: 'red' },
-    { text: 'Designer', color: 'orange' },
-    { text: 'Illustrator', color: 'yellow' },
+    { text: 'a Web Developer', color: 'red' },
+    { text: 'a Designer', color: 'orange' },
+    { text: 'an Illustrator', color: 'yellow' },
   ];
 
   useEffect(() => {

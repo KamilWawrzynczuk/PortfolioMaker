@@ -68,38 +68,37 @@ function EditFormForProject(props) {
   return (
     <div className='create-area create-area-form'>
       {props.isClicked ? null : (
-        <form className='edit-form edit-form-project'>
+        <form className='edit-form'>
           <textarea
             name='subtitle'
             onChange={handleChange}
-            placeholder={note.subtitle}
+            placeholder={currentProject[0].subtitle}
             rows='1'
           />
           <textarea
             name='title'
             onChange={handleChange}
-            placeholder={note.title}
+            placeholder={currentProject[0].title}
             rows='1'
           />
           <textarea
             name='description'
             onChange={handleChange}
-            placeholder={note.description}
+            placeholder={currentProject[0].description}
             rows='4'
           />
           <textarea
             name='secondSubtitle'
             onChange={handleChange}
-            placeholder={note.secondSubtitle}
+            placeholder={currentProject[0].secondSubtitle}
             rows='1'
           />
           <textarea
             name='list'
             onChange={handleChange}
-            placeholder={note.list}
+            placeholder={currentProject[0].list}
             rows='1'
           />
-
           <button className='edit-button' onClick={submitNote}>
             Edit
           </button>
