@@ -6,15 +6,21 @@ import { isLogin } from '../util/isLogin';
 import UserWebsite from './Website';
 import { useContext } from 'react';
 import { userProjectsContext } from '../context/UserProjectsContext';
+import { proudOfContext } from '../context/ProudOfContext';
+import { userSocialContext } from '../context/userSocialContext';
 
 function User() {
   const auth = useAuth();
   const [user, setUser] = useState();
   const { userState, dispatchUserState } = useContext(userProjectsContext);
+  const { proudOfState, dispatchProudOfState } = useContext(proudOfContext);
+  const { userSocialState, dispatchUserSocialState } =
+    useContext(userSocialContext);
 
   useEffect(() => {
     const token = localStorage.getItem('token') || '';
     const user_id = localStorage.getItem('user_id');
+
     if (isLogin()) {
       axios
         .get(`http://localhost:8080/users/getOne/${user_id}`, {
@@ -31,7 +37,6 @@ function User() {
           });
         })
         .catch((err) => {
-          console.log(err, ' w user err');
           window.localStorage.setItem('isAuth', 'false');
           auth.contextValue.setUser({
             isAuth: err.response.data.success,
@@ -56,6 +61,47 @@ function User() {
             'userProjectsState',
             JSON.stringify(userData.data.projects)
           );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const userId = localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getUserData', { userId })
+        .then((userData) => {
+          dispatchUserState({
+            type: 'INTRO',
+            payload: {
+              intro: userData.data.userDataFromDb,
+            },
+          });
+
+          localStorage.setItem(
+            'userState',
+            JSON.stringify(userData.data.userDataFromDb)
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const userId = window.localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getOne', { userId })
+        .then((userData) => {
+          dispatchUserSocialState({
+            type: 'UPDATE',
+            payload: userData.data.social,
+          });
         })
         .catch((error) => {
           console.log(error);

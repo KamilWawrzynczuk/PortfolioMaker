@@ -1,10 +1,10 @@
 import User from '../../models/userModel.js';
-import IntroData from '../../models/introDataModel.js';
+import ContactData from '../../models/contactModel.js';
 
-export function getUserData(req, res, next) {
+export function getContactData(req, res, next) {
   const { userId } = req.body;
 
-  IntroData.find({ userId })
+  ContactData.find({ userId })
     .then((userData) => {
       if (!userData) {
         return res
@@ -15,8 +15,10 @@ export function getUserData(req, res, next) {
       res.status(200).json({
         success: true,
         msg: 'User Data: ',
-        userDataFromDb: userData[0].intro,
-
+        userDataFromDb: {
+          contact: userData[0].contact,
+          contactInfo: userData[0].contactInfo,
+        },
       });
     })
     .catch((err) => {

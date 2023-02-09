@@ -1,15 +1,42 @@
-import React, { useRef, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
+import axios from 'axios';
 import CreateArea from './CreateArea';
 import { userContext } from '../../../context/UserIntroContext';
 import { useState } from 'react';
 
 function UserIntro() {
-  const { userState } = useContext(userContext);
+  const { userState, dispatchUserState } = useContext(userContext);
   const [isClicked, setIsClicked] = useState(true);
+
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const userId = localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getUserData', { userId })
+        .then((userData) => {
+
+          dispatchUserState({
+            type: 'INTRO',
+            payload: {
+              intro: userData.data.userDataFromDb,
+            },
+          });
+
+          localStorage.setItem(
+            'userState',
+            JSON.stringify(userData.data.userDataFromDb)
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
 
   function handleClick() {
     setIsClicked(!isClicked);
   }
+
   return (
     <>
       <div onClick={handleClick} className=''>
@@ -33,11 +60,7 @@ function UserIntro() {
       >
         Edit
       </button>
-      <CreateArea
-        setIsClicked={setIsClicked}
-        isClicked={isClicked}
-        dispatch={'INTRO_HEADER'}
-      />
+      <CreateArea setIsClicked={setIsClicked} isClicked={isClicked} />
     </>
   );
 }

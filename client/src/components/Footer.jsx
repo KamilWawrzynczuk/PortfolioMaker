@@ -1,35 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useContext } from 'react';
+import { userSocialContext } from '../context/userSocialContext';
 
-function Footer() {
+function Footer({ github, linkedIn, email, lName, fName }) {
+  const { userSocialState, dispatchUserSocialState } =
+    useContext(userSocialContext);
+
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const userId = window.localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getOne', { userId })
+        .then((userData) => {
+          dispatchUserSocialState({
+            type: 'UPDATE',
+            payload: userData.data.social,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   return (
     <footer>
       <h2>Portfolio Creator</h2>
       <ul>
         <li>
-          <a
-            href='https://www.linkedin.com/in/kamil-wawrzynczuk/'
+          <Link
+            to={`${linkedIn}`}
+            aria-label='Link to linkedIn'
             target='_blank'
           >
             <span className='fa-brands fa-linkedin' aria-hidden='true'></span>
             <span className='sr-only'>LinkedIn</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href='https://github.com/KamilWawrzynczuk' target='_blank'>
+          <Link to={`${github}`} aria-label='Link to linkedIn' target='_blank'>
             <span className='fa-brands fa-github' aria-hidden='true'></span>
             <span className='sr-only'>Github</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href='mailto:kamil.wawrzynczuk@gmail.com' target='_blank'>
+          <Link to={`mailto:${email}`}>
             <span className='fa-solid fa-envelope' aria-hidden='true'></span>
             <span className='sr-only'>Email</span>
-          </a>
+          </Link>
         </li>
       </ul>
 
       <p>
-        <small>&copy; 2023 Kamil Wawrzyńczuk. All rights reserved.</small>
+        <small>&copy; 2023 {` ${fName} ${lName}`}. All rights reserved.</small>
       </p>
     </footer>
   );

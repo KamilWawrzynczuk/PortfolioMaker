@@ -4,9 +4,34 @@ import { v4 as uuidv4 } from 'uuid';
 import { useContext } from 'react';
 import { userProjectsContext } from '../context/UserProjectsContext';
 import SingleProject from './Website/ProjectsComponents/SingleProject';
+import EditFormProjectsProudOf from './Website/ProjectsComponents/EditFormProjectsProudOf';
+import { proudOfContext } from '../context/ProudOfContext';
 
 function Projects() {
   const { userState, dispatchUserState } = useContext(userProjectsContext);
+  const [isClicked, setIsClicked] = useState(true);
+  const { proudOfState, dispatchProudOfState } = useContext(proudOfContext);
+
+  function handleClick() {
+    setIsClicked(!isClicked);
+  }
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const userId = localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getProudOf', { userId })
+        .then((userData) => {
+          dispatchProudOfState({
+            type: 'UPDATE',
+            payload: userData.data.userDataFromDb,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   function handleAddProject() {
     const userId = localStorage.getItem('user_id');
     axios
@@ -14,7 +39,6 @@ function Projects() {
         userId,
       })
       .then((newProject) => {
-        console.log(newProject, ' w add new project ');
         dispatchUserState({
           type: 'ADD',
           payload: [
@@ -36,7 +60,22 @@ function Projects() {
   return (
     <div className='section-blue'>
       <section id='projects'>
-        <h2>Projects I'm proud of</h2>
+        <div className='edit-proud'>
+          <h2>{proudOfState}</h2>
+          <button
+            onClick={handleClick}
+            type='button'
+            aria-label='Click here to edit paragraph'
+            className='edit-button edit-proud-button'
+          >
+            Edit
+          </button>
+          <EditFormProjectsProudOf
+            setIsClicked={setIsClicked}
+            isClicked={isClicked}
+          />
+        </div>
+
         {userState.map((project, index) => (
           <SingleProject
             key={uuidv4()}

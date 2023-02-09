@@ -2,7 +2,7 @@ import User from '../../models/userModel.js';
 
 export function getOneUser(req, res, next) {
   const { user_id } = req.params;
-  User.findById( user_id )
+  User.findById(user_id)
     .then((user) => {
       if (!user) {
         res.status(404).json({ success: false, msg: 'User does not exist.' });

@@ -3,10 +3,9 @@ import axios from 'axios';
 
 export const userContext = createContext();
 
-let initialValue;
+let initialValue = {};
 
 if (localStorage.getItem('userState') === null) {
-
   initialValue = {
     intro: {
       greeting: 'Hi, my name is',
@@ -14,10 +13,10 @@ if (localStorage.getItem('userState') === null) {
       header: 'I am a Designer',
       specialty: `I am specializing in UX Design`,
       current: `Currently, i am searching for new challenges`,
+      proudOf: `Projects I'm proud of`,
     },
   };
 } else {
-
   initialValue = {
     intro: JSON.parse(localStorage.getItem('userState')),
   };
@@ -26,10 +25,8 @@ if (localStorage.getItem('userState') === null) {
 function reducer(state, action) {
   switch (action.type) {
     case 'INTRO':
-      return {
-        ...state,
-        intro: { ...state.intro, ...action.payload },
-      };
+
+      return { ...action.payload };
     default:
       return state;
   }

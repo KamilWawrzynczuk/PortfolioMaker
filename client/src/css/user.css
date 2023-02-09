@@ -2,9 +2,12 @@
   padding: 1rem 1rem 10rem 1rem;
   padding-bottom: 1rem;
   max-width: 1200px;
-  margin: 0 auto; 
-  border: 1px solid var(--aqua);
-  border-radius: 25px;
+  margin: 0 auto;
+}
+
+.user-intro-profile {
+  height: 60vh;
+  border: none;
 }
 
 #user-intro img {

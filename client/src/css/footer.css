@@ -5,6 +5,12 @@ footer {
   padding: 4rem 0;
 }
 
+.footer-prfile {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
 footer ul {
   list-style-type: none;
   padding: 0;

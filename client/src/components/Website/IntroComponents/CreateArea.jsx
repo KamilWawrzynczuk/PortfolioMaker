@@ -37,62 +37,27 @@ function CreateArea(props) {
         data: note,
         userId,
       })
-      .then((respond) => {
+      .then((introData) => {
+        console.log(introData, ' w create area');
         dispatchUserState({
           type: 'INTRO',
           payload: {
-            greeting:
-              note.intro.greeting.length > 0
-                ? note.intro.greeting
-                : userState.intro.greeting,
-            name:
-              note.intro.name.length > 0
-                ? note.intro.name
-                : userState.intro.name,
-            header:
-              note.intro.header.length > 0
-                ? note.intro.header
-                : userState.intro.header,
-            specialty:
-              note.intro.specialty.length > 0
-                ? note.intro.specialty
-                : userState.intro.specialty,
-            current:
-              note.intro.current.length > 0
-                ? note.intro.current
-                : userState.intro.current,
+            intro: {
+              greeting: introData.data.introData.greeting,
+
+              name: introData.data.introData.name,
+
+              header: introData.data.introData.header,
+
+              specialty: introData.data.introData.specialty,
+
+              current: introData.data.introData.current,
+            },
           },
         });
       })
       .catch((err) => console.log(err));
   }
-
-  useEffect(() => {
-    if (localStorage.getItem('user_id') !== null) {
-      const user_id = localStorage.getItem('user_id');
-      axios
-        .post('http://localhost:8080/users/getUserData', { user_id })
-        .then((userData) => {
-
-          dispatchUserState({
-            type: 'INTRO',
-            payload: userData.data.userDataFromDb,
-          });
-
-          localStorage.setItem(
-            'userState',
-            JSON.stringify(userData.data.userDataFromDb)
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
-
-  // useEffect(() => {
-  //   localStorage.setItem('userState', JSON.stringify(userState));
-  // }, []);
 
   return (
     <div className='create-area'>

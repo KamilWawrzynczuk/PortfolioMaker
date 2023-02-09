@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -12,11 +12,50 @@ import ForgotPasswordPage from './components/ForgotPasswordPage';
 import PasswordResetLandingPage from './components/PasswordResetLandingPage';
 import { EmailVerificationLandingPage } from './components/EmailVerificationLandingPage';
 import Line from './components/Line';
-
+import { useContext } from 'react';
+import { userSocialContext } from './context/userSocialContext';
+import axios from 'axios';
 function App() {
+  const { userSocialState, dispatchUserSocialState } =
+    useContext(userSocialContext);
+  const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
+  let github;
+  let linkedIn;
+  let email = '';
+  let fName = 'John';
+  let lName = 'Doe';
+
+  if (isAuth === false) {
+    github = 'https://github.com';
+    linkedIn = 'https://linkedin.com';
+  } else {
+    github = userSocialState.github;
+    linkedIn = userSocialState.linkedIn;
+    email = userSocialState.email;
+    lName = userSocialState.lName;
+    fName = userSocialState.fName;
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('user_id') !== null) {
+      const userId = window.localStorage.getItem('user_id');
+      axios
+        .post('http://localhost:8080/users/getOne', { userId })
+        .then((userData) => {
+          dispatchUserSocialState({
+            type: 'UPDATE',
+            payload: userData.data.social,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, []);
+
   return (
     <>
-      <Header />
+      <Header github={github} linkedIn={linkedIn} />
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' exact element={<Login />}></Route>
@@ -36,7 +75,13 @@ function App() {
         </Route>
       </Routes>
       <Line />
-      <Footer />
+      <Footer
+        github={github}
+        linkedIn={linkedIn}
+        email={email}
+        lName={lName}
+        fName={fName}
+      />
     </>
   );
 }

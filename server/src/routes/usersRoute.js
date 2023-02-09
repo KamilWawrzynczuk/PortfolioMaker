@@ -7,7 +7,7 @@ import { userValidationMiddleware } from '../models/validation/userModelValidati
 import { resetPasswordValidationMiddleware } from '../models/validation/resetPasswordValidation.js';
 import { forgotPasswordSendEmail } from './usersControllers/forgotPasswordSendEmail.js';
 import { resetUserPassword } from './usersControllers/resetUserPassword.js';
-import { getOneUser } from './usersControllers/getOneUser.js';
+import { getUserSocial } from './usersControllers/getUserSocial.js';
 import { authMiddleware } from '../util/utils.js';
 import { addIntroData } from './usersControllers/addIntroData.js';
 import { getUserData } from './usersControllers/getUserData.js';
@@ -15,10 +15,16 @@ import { getUserProjectsData } from './usersControllers/getUserProjectsData.js';
 import { addProjectData } from './usersControllers/addProjectData.js';
 import { deleteOneProject } from './usersControllers/deleteOneProject.js';
 import { addUserImage } from './usersControllers/addUserImage.js';
-
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { getProudOfData } from './usersControllers/getProudOfData.js';
+import { addProudOf } from './usersControllers/addProudOfState.js';
+import { getContactData } from './usersControllers/getContactData.js';
+import { addContactData } from './usersControllers/addContactData.js';
+import { changePassword } from './usersControllers/changePassword.js';
+import { updateUser } from './usersControllers/updateUser.js';
+import { getOneUser } from './usersControllers/getOneUser.js';
 
 // Account access information from CLOUDINARY
 cloudinary.config({
@@ -40,6 +46,9 @@ const upload = multer({
 });
 
 export const usersRoute = Router();
+
+// GET one user
+usersRoute.post('/getOne', getUserSocial);
 
 // GET one user
 usersRoute.get('/getOne/:user_id', authMiddleware, getOneUser);
@@ -66,8 +75,21 @@ usersRoute.patch(
   resetUserPassword
 );
 
+// PUT Change user password
+usersRoute.patch(
+  '/changePassword',
+  resetPasswordValidationMiddleware,
+  changePassword
+);
+
+// Patch update user
+usersRoute.patch('/updateUser', updateUser);
+
 // PATCH put user data intro database
 usersRoute.patch('/addIntroData', addIntroData);
+
+//PATCH proudOfData
+usersRoute.patch('/addProudOf', addProudOf);
 
 // PATCH user projects data
 usersRoute.put('/addProjectData', addProjectData);
@@ -89,3 +111,12 @@ usersRoute.patch(
   upload.single('image'),
   addUserImage
 );
+
+// GET PROUD OF
+usersRoute.post('/getProudOf', getProudOfData);
+
+//GET CONTACT DATA
+usersRoute.post('/getContactData', getContactData);
+
+// PATCH add contact data
+usersRoute.patch('/addContactData', addContactData);

@@ -5,6 +5,8 @@ import { genPassword, issueJWT } from '../../util/utils.js';
 import { validationResult } from 'express-validator';
 import IntroData from '../../models/introDataModel.js';
 import SingleProjectData from '../../models/projectsDataModel.js';
+import ProudOfData from '../../models/proudOfMode.js';
+import ContactData from '../../models/contactModel.js';
 
 export async function registerUser(req, res, next) {
   const { password, confirmPassword } = req.body;
@@ -61,13 +63,13 @@ export async function registerUser(req, res, next) {
         userId: user._id,
       });
 
-      // const userToUpdate = await User.findByIdAndUpdate(
-      //   user._id,
-      //   {
-      //     $set: { introData: introData._id },
-      //   },
-      //   { new: true }
-      // );
+      const proudOf = await ProudOfData.create({
+        userId: user._id,
+      });
+
+      const contact = await ContactData.create({
+        userId: user._id,
+      });
 
       // create and send JWT token to user
       const jwt = issueJWT(user);

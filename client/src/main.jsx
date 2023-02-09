@@ -6,8 +6,10 @@ import ErrorBoundary from './errorBoundary/ErrorBoundary';
 import { AuthProvider } from './auth/auth';
 import UserContext from './context/UserIntroContext';
 import UserProjectsContext from './context/UserProjectsContext';
-
 import './css/style.css';
+import ProudOfContext from './context/ProudOfContext';
+import ContactContext from './context/ContactContext';
+import UserSocialContext from './context/userSocialContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -15,9 +17,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <UserContext>
           <UserProjectsContext>
-      
-              <App />
-       
+            <ProudOfContext>
+              <ContactContext>
+                <UserSocialContext>
+                  <App />
+                </UserSocialContext>
+              </ContactContext>
+            </ProudOfContext>
           </UserProjectsContext>
         </UserContext>
       </AuthProvider>

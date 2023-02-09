@@ -37,6 +37,14 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Intro',
   },
+  github: {
+    type: String,
+    default: 'https://github.com/'
+  },
+  linkedIn: {
+    type: String,
+    default: 'https://www.linkedin.com/'
+  },
   changeAt: {
     type: Date,
   },

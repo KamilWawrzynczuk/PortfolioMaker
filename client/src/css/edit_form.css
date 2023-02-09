@@ -136,3 +136,18 @@ input[type='file'] {
     transform: scale(1);
   }
 }
+
+.edit-proud {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: calc(2.5rem * 1.5);
+}
+
+.edit-proud-button {
+  width: 45px;
+}
+
+
+.contact-edit-div {
+  text-align: left;
+}

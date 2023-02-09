@@ -2,9 +2,10 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/auth';
 
-function Header() {
+function Header({ github, linkedIn }) {
   const auth = useAuth();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
+
   return (
     <>
       <header>
@@ -29,7 +30,7 @@ function Header() {
             </li>
             {isAuth !== false ? (
               <>
-                <li>
+                {/* <li>
                   <NavLink to='/users/projects'>Projects</NavLink>
                 </li>
                 <li>
@@ -37,9 +38,9 @@ function Header() {
                 </li>
                 <li>
                   <Link to='/users'>Contact Me</Link>
-                </li>
+                </li> */}
                 <li>
-                  <Link to='/users/profile'>Profile</Link>
+                  <Link to='/users/profile'>My Profile</Link>
                 </li>
                 <li>
                   <Link to='/' onClick={auth.contextValue.logout}>
@@ -47,7 +48,11 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to='https://www.linkedin.com/in/kamil-wawrzynczuk/'>
+                  <Link
+                    to={`${linkedIn}`}
+                    aria-label='Link to linkedIn'
+                    target='_blank'
+                  >
                     <span
                       className='fa-brands fa-linkedin'
                       aria-hidden='true'
@@ -56,7 +61,11 @@ function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to='https://github.com/KamilWawrzynczuk'>
+                  <Link
+                    to={`${github}`}
+                    aria-label='Link to GitHub'
+                    target='_blank'
+                  >
                     <i className='fa-brands fa-github' aria-hidden='true'></i>
                     <span className='sr-only'>Github</span>
                   </Link>
