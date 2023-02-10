@@ -116,9 +116,12 @@ function User() {
           Hi, <span>{user}</span>{' '}
         </p>
         <p>
-          {' '}
           This is your Portfolio Creator account. <br />
-          Click on elements to edit them. To see your website, click here.
+          You can edit your website below,
+          <br />
+          go to live version of your Portfolio
+          <br />
+          or change your profile data.
         </p>
       </section>
       <UserWebsite />

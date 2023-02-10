@@ -39,11 +39,15 @@ const userSchema = new Schema({
   },
   github: {
     type: String,
-    default: 'https://github.com/'
+    default: 'https://github.com/',
   },
   linkedIn: {
     type: String,
-    default: 'https://www.linkedin.com/'
+    default: 'https://www.linkedin.com/',
+  },
+  resumeFileName: {
+    type: String,
+    default: null,
   },
   changeAt: {
     type: Date,

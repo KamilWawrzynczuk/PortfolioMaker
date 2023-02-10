@@ -5,6 +5,8 @@ import axios from 'axios';
 import Line from './Line';
 import { useContext } from 'react';
 import { userSocialContext } from '../context/userSocialContext';
+import UploadFile from './Website/Profile/UploadFile';
+import DownloadFile from './Website/Profile/DownloadFile';
 function Profile() {
   const { userSocialState, dispatchUserSocialState } =
     useContext(userSocialContext);
@@ -109,6 +111,12 @@ function Profile() {
         <button type='submit' className='login-button'>
           Update
         </button>
+      </form>
+      <Line />
+      <form className='login-form'>
+        <h4>Upload your Resume:</h4>
+        {passwordMessage && <div className='error'>{passwordMessage}</div>}
+        <UploadFile />
       </form>
       <Line />
       <form onSubmit={handleSubmitChangePassword} className='login-form'>

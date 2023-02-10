@@ -15,7 +15,6 @@ import { getUserProjectsData } from './usersControllers/getUserProjectsData.js';
 import { addProjectData } from './usersControllers/addProjectData.js';
 import { deleteOneProject } from './usersControllers/deleteOneProject.js';
 import { addUserImage } from './usersControllers/addUserImage.js';
-import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { getProudOfData } from './usersControllers/getProudOfData.js';
@@ -25,6 +24,15 @@ import { addContactData } from './usersControllers/addContactData.js';
 import { changePassword } from './usersControllers/changePassword.js';
 import { updateUser } from './usersControllers/updateUser.js';
 import { getOneUser } from './usersControllers/getOneUser.js';
+import { uploadFile } from './usersControllers/uploadFile.js';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { downloadFile } from './usersControllers/downloadFile.js';
+
+// ES6 modules not supporting __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Account access information from CLOUDINARY
 cloudinary.config({
@@ -41,6 +49,7 @@ export async function handleUpload(file) {
 }
 
 const storage = new multer.memoryStorage();
+
 const upload = multer({
   storage,
 });
@@ -111,6 +120,9 @@ usersRoute.patch(
   upload.single('image'),
   addUserImage
 );
+
+// POST Download Resume
+usersRoute.post('/downloadFile/:userId', upload.single('file'), downloadFile);
 
 // GET PROUD OF
 usersRoute.post('/getProudOf', getProudOfData);

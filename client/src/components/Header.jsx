@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/auth';
+import { downloadFile } from '../util/downloadFile';
+import DownloadFile from './Website/Profile/DownloadFile';
 
 function Header({ github, linkedIn }) {
   const auth = useAuth();
@@ -71,9 +73,7 @@ function Header({ github, linkedIn }) {
                   </Link>
                 </li>
                 <li>
-                  <Link to='#' className='button'>
-                    Resume
-                  </Link>
+                  <DownloadFile isAuth={isAuth} />
                 </li>
               </>
             ) : (

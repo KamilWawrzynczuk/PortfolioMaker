@@ -2,63 +2,57 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useContext } from 'react';
 import { userProjectsContext } from '../../../context/UserProjectsContext';
+import FileDownload from 'js-file-download';
 
-function UploadImage({ userId, projectId }) {
+function UploadFile() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const { userState, dispatchUserState } = useContext(userProjectsContext);
+  const [message, setMessage] = useState('');
 
   const handleSelectFile = (e) => {
     const file = e.target.files[0];
     setFile((prev) => file);
   };
 
-  function handleUpload() {
+  function handleUpload(e) {
+    e.preventDefault();
     setLoading(true);
+    const userId = localStorage.getItem('user_id');
     const data = new FormData();
-    data.append('image', file);
+    data.append('file', file);
     axios
-      .patch(
-        `http://localhost:8080/users/uploadImage/${projectId}/${userId}`,
-        data
-      )
-      .then((updateProject) => {
+      .post(`http://localhost:8080/files/upload/${userId}`, data)
+      .then((response) => {
         setLoading(false);
-        dispatchUserState({
-          type: 'EDIT',
-          payload: [
-            {
-              projectId: updateProject.data.userData.projectId,
-              subtitle: updateProject.data.userData.subtitle,
-              title: updateProject.data.userData.title,
-              description: updateProject.data.userData.description,
-              secondSubtitle: updateProject.data.userData.secondSubtitle,
-              list: updateProject.data.userData.list,
-              image: updateProject.data.userData.image,
-            },
-          ],
-        });
+        setMessage(response.data.msg);
       })
       .catch((error) => {
-        alert(error.message);
+        setMessage(response.data.msg);
       });
   }
 
   return (
     <>
-      <label htmlFor={projectId} className='edit-label'>
-        Change image:
+      {' '}
+      {message && (
+        <>
+          <div className='error'>{message}</div>
+          <br />
+        </>
+      )}
+      <label htmlFor='file' className='edit-label'>
+        Choose file:
       </label>
       <input
-        id={projectId}
+        id='file'
         type='file'
         onChange={handleSelectFile}
         multiple={false}
-        name='image'
+        name='file'
         className='edit-input'
       />
-
       {file && <span className='edit-span'> {file.name} </span>}
       {file && (
         <>
@@ -75,4 +69,4 @@ function UploadImage({ userId, projectId }) {
   );
 }
 
-export default UploadImage;
+export default UploadFile;
