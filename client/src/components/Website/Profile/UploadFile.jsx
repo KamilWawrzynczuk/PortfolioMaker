@@ -10,6 +10,7 @@ function UploadFile() {
 
   const { userState, dispatchUserState } = useContext(userProjectsContext);
   const [message, setMessage] = useState('');
+  const [isActive, setIsActive] = useState(false);
 
   const handleSelectFile = (e) => {
     const file = e.target.files[0];
@@ -27,18 +28,29 @@ function UploadFile() {
       .then((response) => {
         setLoading(false);
         setMessage(response.data.msg);
+        setIsActive(true);
+        setTimeout(() => {
+          setMessage(false);
+        }, 2000);
+        setFile(null)
       })
       .catch((error) => {
         setMessage(response.data.msg);
+        setIsActive(true);
+        setTimeout(() => {
+          setMessage(false);
+        }, 2000);
+        setFile(null)
       });
   }
 
   return (
     <>
-      {' '}
       {message && (
         <>
-          <div className='error'>{message}</div>
+          <div className={setIsActive ? 'error error-animation' : 'error'}>
+            {message}
+          </div>
           <br />
         </>
       )}
@@ -53,7 +65,10 @@ function UploadFile() {
         name='file'
         className='edit-input'
       />
-      {file && <span className='edit-span'> {file.name} </span>}
+      { file && <span className='edit-span'>
+        {file.name.substring(0, 25).length < 25
+          ?
+          (`${file.name.substring(0, 20)} ...`) : (file.name)}<br /> </span> }
       {file && (
         <>
           <button

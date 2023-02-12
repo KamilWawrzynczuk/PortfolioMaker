@@ -10,9 +10,10 @@
 @import './user.css';
 @import './login.css';
 @import './form.css';
-@import './error.css';
+
 @import './edit_form.css';
 @import './emailVerification.css';
 @import './typing_animation.css';
 @import './media.css';
 @import './projects.css';
+@import './error.css';

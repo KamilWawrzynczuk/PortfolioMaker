@@ -16,6 +16,8 @@ function SingleProject(props) {
     list,
     projectId,
     image,
+    linkToWebsite,
+    linkValue,
   } = props;
   const [isClicked, setIsClicked] = useState(true);
 
@@ -43,6 +45,14 @@ function SingleProject(props) {
           <p className='blackbox'>{description}</p>
           <h4>{secondSubtitle}</h4>
           <p className='list'>{list}</p>
+          <a
+            href={`//${linkToWebsite}`}
+            target='_blank'
+            className='link-to-project'
+            aria-label={`This link leads to project ${title} website`}
+          >
+            {linkValue}
+          </a>
 
           <div className='project-edit-form'>
             <button

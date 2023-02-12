@@ -37,7 +37,11 @@ function Register() {
       setIsSuccess(true);
     } catch (error) {
       console.log(error);
-      setErrorMessage(error.response.data.errors[0].msg);
+      if (error.response.data.error && error.response.data.error.message === 'Email is already in use.') {
+        setErrorMessage('Email is already in use');
+      } else {
+        setErrorMessage(error.response.data.errors[0].msg);
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../auth/auth';
 import { isLogin } from '../util/isLogin';
@@ -8,6 +9,7 @@ import { useContext } from 'react';
 import { userProjectsContext } from '../context/UserProjectsContext';
 import { proudOfContext } from '../context/ProudOfContext';
 import { userSocialContext } from '../context/userSocialContext';
+import Line from './Line';
 
 function User() {
   const auth = useAuth();
@@ -16,6 +18,8 @@ function User() {
   const { proudOfState, dispatchProudOfState } = useContext(proudOfContext);
   const { userSocialState, dispatchUserSocialState } =
     useContext(userSocialContext);
+
+  const userId = localStorage.getItem('user_id');
 
   useEffect(() => {
     const token = localStorage.getItem('token') || '';
@@ -119,10 +123,15 @@ function User() {
           This is your Portfolio Creator account. <br />
           You can edit your website below,
           <br />
-          go to live version of your Portfolio
+          go to{' '}
+          <a href={`portfolio/${userId}`} target='_blank'>
+            live version{' '}
+          </a>{' '}
+          of your Portfolio
           <br />
-          or change your profile data.
+          or change your <Link to='/users/profile'>profile data. </Link>
         </p>
+        <Line />
       </section>
       <UserWebsite />
     </>

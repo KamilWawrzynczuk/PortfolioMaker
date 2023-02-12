@@ -4,10 +4,14 @@ import { useContext } from 'react';
 import FileDownload from 'js-file-download';
 import { userSocialContext } from '../../../context/userSocialContext';
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
+
 function DownloadFile({ isAuth }) {
   const { userSocialState, dispatchUserSocialState } =
     useContext(userSocialContext);
   const [message, setMessage] = useState('');
+
+  const [isActive, setIsActive] = useState(false);
 
   function handleDownload(e) {
     e.preventDefault();
@@ -23,27 +27,38 @@ function DownloadFile({ isAuth }) {
           res.data,
           `${userSocialState.fName}_${userSocialState.lName}_resume.pdf`
         );
+        setIsActive(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsActive(true);
+        setTimeout(() => {
+          setIsActive(false);
+        }, 500);
+      });
   }
 
   return (
     <>
-      {message && (
-        <>
-          <div className='error'>{message}</div>
-          <br />
-        </>
-      )}
-      {isAuth ? (
-        <Link to='#' onClick={handleDownload} className='button'>
+      <div className='resume-div'>
+        <Link
+          to='#'
+          onClick={handleDownload}
+          className={isActive ? 'button button-wiggle' : 'button'}
+        >
           Resume
         </Link>
-      ) : (
-        <Link to='#' className='button'>
-          Resume
-        </Link>
-      )}
+      </div>
+      {/* {message && (
+        <span
+          className={
+            isActive
+              ? 'error error-resume error-animation'
+              : 'error error-resume'
+          }
+        >
+          {message}
+        </span>
+      )} */}
     </>
   );
 }

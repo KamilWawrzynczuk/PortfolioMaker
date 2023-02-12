@@ -59,7 +59,9 @@ function UploadImage({ userId, projectId }) {
         className='edit-input'
       />
 
-      {file && <span className='edit-span'> {file.name} </span>}
+      {file && (
+        <span className='edit-span'>{`${file.name.substring(0, 25)}...`}</span>
+      )}
       {file && (
         <>
           <button

@@ -15,7 +15,7 @@ const singleProjectData = new Schema({
     description: {
       type: String,
       default:
-        'Description of the project. This should be fairly concise while also describing the key components that you developed or worked on. It can be as long as you need it to be but should at least be a few sentences long. Be sure to include specific links anywhere in the description.',
+        'Description of the project. This should be fairly concise while also describing the key components that you developed or worked on. It can be as long as you need it to be but should at least be a few sentences long. Be sure to add link to the project.',
     },
     secondSubtitle: { type: String, default: 'Technologies used include:' },
     list: { type: String, default: 'HTML | CSS | JAVASCRIPT' },
@@ -23,6 +23,14 @@ const singleProjectData = new Schema({
       type: String,
       default:
         'https://assets.codepen.io/296057/fem-gettingstartedcss-ch5-1.png',
+    },
+    linkToWebsite: {
+      type: String,
+      default: 'Add here link to your website',
+    },
+    linkValue: {
+      type: String,
+      default: 'Go to project website',
     },
   },
 });

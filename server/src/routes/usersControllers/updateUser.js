@@ -2,23 +2,31 @@ import User from '../../models/userModel.js';
 
 export const updateUser = async (req, res, next) => {
   try {
-    const { userId, github, linkedIn } = req.body;
+    const { userId, github, linkedIn, websiteTitle } = req.body;
 
-    console.log(github, linkedIn);
-    console.log(userId);
+    const substringGithubIndex = github.toLowerCase().indexOf('github');
+    const githubLink = github.substring(substringGithubIndex);
+
+    const substringLinkedInIndex = linkedIn.toLowerCase().indexOf('linkedin');
+    const linkedInLink = linkedIn.substring(substringLinkedInIndex);
 
     const userToUpdate = await User.findByIdAndUpdate(
       userId,
       {
-        github: github,
-        linkedIn: linkedIn,
+        github: githubLink,
+        linkedIn: linkedInLink,
+        websiteTitle: websiteTitle,
       },
       { new: true }
     );
     res.status(200).json({
       success: true,
-      msg: 'Links updated',
-      social: { github: userToUpdate.github, linkedIn: userToUpdate.linkedIn },
+      msg: 'Updated successfully',
+      social: {
+        github: userToUpdate.github,
+        linkedIn: userToUpdate.linkedIn,
+        websiteTitle: userToUpdate.websiteTitle,
+      },
     });
   } catch (err) {
     next(err);

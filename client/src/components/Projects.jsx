@@ -50,6 +50,9 @@ function Projects() {
               secondSubtitle: newProject.data.userData.secondSubtitle,
               list: newProject.data.userData.list,
               image: newProject.data.userData.image,
+              linkToWebsite: newProject.data.userData.linkToWebsite,
+              linkValue: newProject.data.userData.linkValue
+
             },
           ],
         });
@@ -86,7 +89,9 @@ function Projects() {
             description={project.description}
             secondSubtitle={project.secondSubtitle}
             list={project.list}
-            image={project.image}
+            image={ project.image }
+            linkToWebsite={ project.linkToWebsite }
+            linkValue = {project.linkValue}
           />
         ))}
 

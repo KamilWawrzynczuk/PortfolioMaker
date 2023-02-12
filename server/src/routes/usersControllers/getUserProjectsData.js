@@ -23,6 +23,8 @@ export function getUserProjectsData(req, res, next) {
             secondSubtitle: project.projects.secondSubtitle,
             list: project.projects.list,
             image: project.projects.image,
+            linkToWebsite: project.projects.linkToWebsite,
+            linkValue: project.projects.linkValue,
           };
         }),
       });

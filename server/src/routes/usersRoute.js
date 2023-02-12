@@ -29,6 +29,8 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { downloadFile } from './usersControllers/downloadFile.js';
+import { getAllData } from './usersControllers/getAllData.js';
+import { deleteOneUser } from './usersControllers/deleteOneUser.js';
 
 // ES6 modules not supporting __dirname
 const __filename = fileURLToPath(import.meta.url);
@@ -55,6 +57,9 @@ const upload = multer({
 });
 
 export const usersRoute = Router();
+
+// GET ALL DATA
+usersRoute.get('/getAllData/:userId', getAllData);
 
 // GET one user
 usersRoute.post('/getOne', getUserSocial);
@@ -132,3 +137,6 @@ usersRoute.post('/getContactData', getContactData);
 
 // PATCH add contact data
 usersRoute.patch('/addContactData', addContactData);
+
+//DELETE ONE USER
+usersRoute.delete('/deleteOneUser/:userId', deleteOneUser);

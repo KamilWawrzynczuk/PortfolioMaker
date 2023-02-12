@@ -22,7 +22,7 @@ export const addIntroData = async (req, res, next) => {
       },
       { new: true }
     );
-    console.log(introData, ' w petli w add data');
+
     return res.status(200).json({
       success: true,
       msg: 'Intro data updated.',

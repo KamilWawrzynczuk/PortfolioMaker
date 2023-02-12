@@ -9,9 +9,10 @@
   align-items: center;
   margin: 1rem;
 }
+
+
 #projects h2 {
   font-size: 2.5rem;
-
 }
 #projects h3 {
   color: var(--aqua);

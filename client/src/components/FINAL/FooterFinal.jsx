@@ -1,30 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useContext } from 'react';
-import { userSocialContext } from '../context/userSocialContext';
 
-function Footer({ github, linkedIn, email, lName, fName, websiteTitle }) {
-  const { userSocialState, dispatchUserSocialState } =
-    useContext(userSocialContext);
-
-  useEffect(() => {
-    if (localStorage.getItem('user_id') !== null) {
-      const userId = window.localStorage.getItem('user_id');
-      axios
-        .post('http://localhost:8080/users/getOne', { userId })
-        .then((userData) => {
-          dispatchUserSocialState({
-            type: 'UPDATE',
-            payload: userData.data.social,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
-
+function FooterFinal({ github, linkedIn, email, lName, fName, websiteTitle }) {
   return (
     <footer>
       <h2>{websiteTitle}</h2>
@@ -64,4 +41,4 @@ function Footer({ github, linkedIn, email, lName, fName, websiteTitle }) {
   );
 }
 
-export default Footer;
+export default FooterFinal;

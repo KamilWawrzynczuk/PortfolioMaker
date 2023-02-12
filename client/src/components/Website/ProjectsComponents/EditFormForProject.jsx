@@ -15,6 +15,8 @@ function EditFormForProject(props) {
         secondSubtitle: project.secondSubtitle,
         list: project.list,
         image: project.image,
+        linkToWebsite: project.linkToWebsite,
+        linkValue: project.linkValue,
       };
     }
   });
@@ -38,7 +40,31 @@ function EditFormForProject(props) {
     const userId = localStorage.getItem('user_id');
     axios
       .put('http://localhost:8080/users/addProjectData', {
-        data: note,
+        data: {
+          subtitle:
+            note.subtitle.length > 0
+              ? note.subtitle
+              : currentProject[0].subtitle,
+          title: note.title.length > 0 ? note.title : currentProject[0].title,
+          description:
+            note.description.length > 0
+              ? note.description
+              : currentProject[0].description,
+          secondSubtitle:
+            note.secondSubtitle.length > 0
+              ? note.secondSubtitle
+              : currentProject[0].secondSubtitle,
+          list: note.list.length > 0 ? note.list : currentProject[0].list,
+          image: currentProject[0].image,
+          linkToWebsite:
+            note.linkToWebsite.length > 0
+              ? note.linkToWebsite
+              : currentProject[0].linkToWebsite,
+          linkValue:
+            note.linkValue.length > 0
+              ? note.linkValue
+              : currentProject[0].linkValue,
+        },
         userId,
         projectId: props.projectId,
       })
@@ -54,6 +80,8 @@ function EditFormForProject(props) {
               secondSubtitle: updateProject.data.userData.secondSubtitle,
               list: updateProject.data.userData.list,
               image: updateProject.data.userData.image,
+              linkToWebsite: updateProject.data.userData.linkToWebsite,
+              linkValue: updateProject.data.userData.linkValue,
             },
           ],
         });
@@ -85,7 +113,7 @@ function EditFormForProject(props) {
             name='description'
             onChange={handleChange}
             placeholder={currentProject[0].description}
-            rows='4'
+            rows='5'
           />
           <textarea
             name='secondSubtitle'
@@ -97,6 +125,18 @@ function EditFormForProject(props) {
             name='list'
             onChange={handleChange}
             placeholder={currentProject[0].list}
+            rows='1'
+          />
+          <textarea
+            name='linkValue'
+            onChange={handleChange}
+            placeholder={currentProject[0].linkValue}
+            rows='1'
+          />
+          <textarea
+            name='linkToWebsite'
+            onChange={handleChange}
+            placeholder={currentProject[0].linkToWebsite}
             rows='1'
           />
           <button className='edit-button' onClick={submitNote}>

@@ -7,7 +7,7 @@ let initialValue = [];
 function reducer(state, action) {
   switch (action.type) {
     case 'UPDATE':
-      return { ...action.payload };
+      return { ...state,...action.payload };
     case 'LOGOUT':
       return {};
     default:

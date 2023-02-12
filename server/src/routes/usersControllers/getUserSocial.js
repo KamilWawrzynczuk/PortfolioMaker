@@ -20,6 +20,7 @@ export function getUserSocial(req, res, next) {
           email: user.email,
           fName: user.fName,
           lName: user.lName,
+          websiteTitle: user.websiteTitle,
         },
       });
     })

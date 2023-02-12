@@ -40,15 +40,15 @@ function UserIntro() {
   return (
     <>
       <div onClick={handleClick} className=''>
-        <p className='name click-area'>{userState.intro.greeting}</p>
+        <p className='name'>{userState.intro.greeting}</p>
         <span
           type='button'
           aria-label='Click here to header'
-          className='name-span click-area'
+          className='name-span'
         >
           {userState.intro.name}
         </span>
-        <h2 className='click-area'>{userState.intro.header}</h2>
+        <h2 className=''>{userState.intro.header}</h2>
         <p>{userState.intro.specialty}</p>
         <p>{userState.intro.current}</p>
       </div>

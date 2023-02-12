@@ -3,7 +3,7 @@ import SingleProjectData from '../../models/projectsDataModel.js';
 export const deleteOneProject = async (req, res, next) => {
   try {
     const { projectId } = req.params;
-    console.log(projectId, ' w delete')
+
     const projectToDelete = await SingleProjectData.deleteOne({
       _id: projectId,
     });

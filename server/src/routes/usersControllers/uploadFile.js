@@ -11,7 +11,7 @@ export async function uploadFile(req, res, next) {
       if (!user) {
         return res.status(404).json({ success: false, msg: 'Upload failed.' });
       } else {
-        console.log(user, ' w user')
+
         return res
           .status(200)
           .json({ success: true, msg: 'Resume upload successfully' });

@@ -82,12 +82,10 @@ input[type='file'] {
   background-color: var(--hotmag);
 }
 
-.button-upload {
-  
-}
-
 .edit-span {
   font-size: 0.9rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 @keyframes hide {
@@ -147,7 +145,13 @@ input[type='file'] {
   width: 45px;
 }
 
-
 .contact-edit-div {
   text-align: left;
+}
+
+.link-to-project {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }

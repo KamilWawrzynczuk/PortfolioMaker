@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/auth';
-import { downloadFile } from '../util/downloadFile';
 import DownloadFile from './Website/Profile/DownloadFile';
+import { useContext } from 'react';
+import { userSocialContext } from '../context/userSocialContext';
+import { useEffect } from 'react';
+import axios from 'axios';
 
-function Header({ github, linkedIn }) {
+function Header({ github, linkedIn, executeScroll }) {
   const auth = useAuth();
   const isAuth = JSON.parse(window.localStorage.getItem('isAuth'));
+
+  const { userSocialState, dispatchUserSocialState } =
+    useContext(userSocialContext);
 
   return (
     <>
@@ -21,7 +27,7 @@ function Header({ github, linkedIn }) {
                 ></span>
                 {isAuth ? (
                   <Link to='/users'>
-                    <span>Portfolio Creator</span>
+                    <span>{`${userSocialState.websiteTitle}`}</span>
                   </Link>
                 ) : (
                   <Link to='/'>
@@ -51,7 +57,7 @@ function Header({ github, linkedIn }) {
                 </li>
                 <li>
                   <Link
-                    to={`${linkedIn}`}
+                    to={`//${linkedIn}`}
                     aria-label='Link to linkedIn'
                     target='_blank'
                   >
@@ -64,7 +70,7 @@ function Header({ github, linkedIn }) {
                 </li>
                 <li>
                   <Link
-                    to={`${github}`}
+                    to={`//${github}`}
                     aria-label='Link to GitHub'
                     target='_blank'
                   >
@@ -73,7 +79,7 @@ function Header({ github, linkedIn }) {
                   </Link>
                 </li>
                 <li>
-                  <DownloadFile isAuth={isAuth} />
+                  <DownloadFile />
                 </li>
               </>
             ) : (

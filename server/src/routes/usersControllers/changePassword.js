@@ -7,7 +7,9 @@ export async function changePassword(req, res, next) {
   const myValidationResults = validationResult(req);
 
   if (newPassword !== confirmPassword) {
-    return res.status(401).send({ success: false, msg: 'Passwords need to be the same.' });
+    return res
+      .status(401)
+      .send({ success: false, errors: 'Passwords need to be the same.' });
   }
 
   if (myValidationResults.errors.length > 0) {

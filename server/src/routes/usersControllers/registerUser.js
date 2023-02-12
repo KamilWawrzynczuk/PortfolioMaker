@@ -9,12 +9,15 @@ import ProudOfData from '../../models/proudOfMode.js';
 import ContactData from '../../models/contactModel.js';
 
 export async function registerUser(req, res, next) {
+  
   const { password, confirmPassword } = req.body;
   const verificationString = uuidv4();
   const myValidationResults = validationResult(req);
 
   if (password !== confirmPassword) {
-    return res.status(400).send({ msg: 'Passwords need to be the same.' });
+    return res
+      .status(400)
+      .send({ success: false, errors: [{msg: 'Passwords need to be the same.'}] });
   }
 
   if (myValidationResults.errors.length > 0) {

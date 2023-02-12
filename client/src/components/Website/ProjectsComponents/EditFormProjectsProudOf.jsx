@@ -41,6 +41,7 @@ function EditFormProjectsProudOf(props) {
             name='proudOf'
             onChange={handleChange}
             placeholder={proudOfState}
+        
             rows='1'
           />
           <button className='edit-button' onClick={submitNote}>
