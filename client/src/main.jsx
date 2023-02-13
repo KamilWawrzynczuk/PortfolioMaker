@@ -10,6 +10,9 @@ import './css/style.css';
 import ProudOfContext from './context/ProudOfContext';
 import ContactContext from './context/ContactContext';
 import UserSocialContext from './context/userSocialContext';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if (process.env.NODE_ENV === 'production') disableReactDevTools();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>

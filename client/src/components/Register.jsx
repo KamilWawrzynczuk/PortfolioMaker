@@ -37,10 +37,19 @@ function Register() {
       setIsSuccess(true);
     } catch (error) {
       console.log(error);
-      if (error.response.data.error && error.response.data.error.message === 'Email is already in use.') {
+      if (
+        error.response.data.error &&
+        error.response.data.error.message === 'Email is already in use.'
+      ) {
         setErrorMessage('Email is already in use');
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
       } else {
         setErrorMessage(error.response.data.errors[0].msg);
+        setTimeout(() => {
+          setErrorMessage(false);
+        }, 2000);
       }
     }
   }
@@ -59,7 +68,9 @@ function Register() {
       <div className=''>
         <form onSubmit={handleSubmit} className='login-form'>
           <h3>Please Register</h3>
-          {errorMessage && <div className='error'>{errorMessage}</div>}
+          {errorMessage && (
+            <div className='error error-animation'>{errorMessage}</div>
+          )}
           <label className='login-label' htmlFor='fName'>
             First Name
           </label>

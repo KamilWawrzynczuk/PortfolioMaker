@@ -15,6 +15,8 @@ function Login() {
   const location = useLocation();
   const redirectPath = location.state?.path || '/users';
 
+  const [loginMessage, setLoginMessage] = useState('');
+
   const navigate = useNavigate();
 
   function handleChange(event) {
@@ -47,6 +49,10 @@ function Login() {
           isAuth: false,
           msg: error.response.data.msg,
         });
+        setLoginMessage(error.response.data.msg);
+        setTimeout(() => {
+          setLoginMessage(false);
+        }, 2000);
       });
   }
 
@@ -67,9 +73,7 @@ function Login() {
     <div className='login-form'>
       <form onSubmit={handleSubmit} className='login-form'>
         <h3>Please Login</h3>
-        {auth.contextValue.user.msg && (
-          <div className='error'>{auth.contextValue.user.msg}</div>
-        )}
+        {loginMessage && <div className='error'>{loginMessage}</div>}
         <label className='login-label' htmlFor='email'>
           Email
         </label>
