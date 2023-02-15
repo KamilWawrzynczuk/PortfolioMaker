@@ -15,6 +15,8 @@ Sone future features:
 
 - changing style of website, different templates,
   colors etc.
+  
+  Click [here](https://portfoliomaker.onrender.com/) to see live version of this site.
 
 ## HOW TO RUN PROJECT
 
