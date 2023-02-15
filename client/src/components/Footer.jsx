@@ -12,7 +12,7 @@ function Footer({ github, linkedIn, email, lName, fName, websiteTitle }) {
     if (localStorage.getItem('user_id') !== null) {
       const userId = window.localStorage.getItem('user_id');
       axios
-        .post('http://localhost:8080/users/getOne', { userId })
+        .post('https://portfoliocreator.onrender.com/users/getOne', { userId })
         .then((userData) => {
           dispatchUserSocialState({
             type: 'UPDATE',

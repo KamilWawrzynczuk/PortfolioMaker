@@ -33,7 +33,7 @@ function CreateArea(props) {
 
     const userId = localStorage.getItem('user_id');
     axios
-      .patch('http://localhost:8080/users/addIntroData', {
+      .patch('https://portfoliocreator.onrender.com/users/addIntroData', {
         data: note,
         userId,
       })

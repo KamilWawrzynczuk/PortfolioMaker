@@ -3,12 +3,12 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ContactFinal from '../../FINAL/ContactFinal';
-import FooterFinal from '../../FINAL/FooterFinal';
-import HeaderFinal from '../../FINAL/HeaderFinal';
-import ProjectsFinal from '../../FINAL/ProjectsFinal';
-import UserIntroFinal from '../../FINAL/UserIntroFinal';
-import Line from '../../Line';
+import ContactFinal from '../FINAL/ContactFinal';
+import FooterFinal from '../FINAL/FooterFinal';
+import HeaderFinal from '../FINAL/HeaderFinal';
+import ProjectsFinal from '../FINAL/ProjectsFinal';
+import UserIntroFinal from '../FINAL/UserIntroFinal';
+import Line from '../Line';
 
 function FinalWebsite() {
   const path = useLocation();
@@ -28,7 +28,7 @@ function FinalWebsite() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/users/getAllData/${userId}`)
+      .get(`https://portfoliocreator.onrender.com/users/getAllData/${userId}`)
       .then((respond) => {
         setUser({
           contactData: respond.data.userData.contactData[0],

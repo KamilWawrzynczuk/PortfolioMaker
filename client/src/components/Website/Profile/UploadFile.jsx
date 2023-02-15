@@ -24,7 +24,7 @@ function UploadFile() {
     const data = new FormData();
     data.append('file', file);
     axios
-      .post(`http://localhost:8080/files/upload/${userId}`, data)
+      .post(`https://portfoliocreator.onrender.com/files/upload/${userId}`, data)
       .then((response) => {
         setLoading(false);
         setMessage(response.data.msg);

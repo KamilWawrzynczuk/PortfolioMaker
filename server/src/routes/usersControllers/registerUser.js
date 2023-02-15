@@ -1,7 +1,7 @@
 import User from '../../models/userModel.js';
 import { sendEmail } from '../../util/sendEmail.js';
 import { v4 as uuidv4 } from 'uuid';
-import { genPassword, issueJWT } from '../../util/utils.js';
+import { genPassword, issueJWT } from '../../../utils.js';
 import { validationResult } from 'express-validator';
 import IntroData from '../../models/introDataModel.js';
 import SingleProjectData from '../../models/projectsDataModel.js';
@@ -14,12 +14,10 @@ export async function registerUser(req, res, next) {
   const myValidationResults = validationResult(req);
 
   if (password !== confirmPassword) {
-    return res
-      .status(400)
-      .send({
-        success: false,
-        errors: [{ msg: 'Passwords need to be the same.' }],
-      });
+    return res.status(400).send({
+      success: false,
+      errors: [{ msg: 'Passwords need to be the same.' }],
+    });
   }
 
   if (myValidationResults.errors.length > 0) {
@@ -55,7 +53,7 @@ export async function registerUser(req, res, next) {
         subject: 'Please verify your email',
         text: `
             Thanks for signing up! To verify your email, click here:
-            http://localhost:5173/users/verify-email/${user.verificationString}
+            https://portfoliomaker.onrender.com/#/users/verify-email/${user.verificationString}
         `,
       });
 

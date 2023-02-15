@@ -11,7 +11,7 @@ export const EmailVerificationLandingPage = () => {
     const loadVerification = async () => {
       try {
         const response = await axios.put(
-          'http://localhost:8080/users/verify-email',
+          'https://portfoliocreator.onrender.com/users/verify-email',
           { verificationString }
         );
         setIsSuccess(true);
@@ -27,7 +27,7 @@ export const EmailVerificationLandingPage = () => {
 
   if (isLoading) return <p>Loading...</p>;
   return isSuccess ? (
-    <div className='login-form'>
+    <div className='user-intro login-form-success'>
       <h2>Success</h2>
       <p>Your email is verified.</p>
       <p>
@@ -35,7 +35,7 @@ export const EmailVerificationLandingPage = () => {
       </p>
     </div>
   ) : (
-    <div className='login-form'>
+    <div className='login-form login-form-success'>
       <h2>Ups...</h2>
       <p>Look like your verification code is not valid.</p>
       <p>

@@ -32,46 +32,61 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // MIDDLEWARE
-app.use(
-  cors({
-    origin: 'http://localhost:5173', // where react app is working
-  })
-);
-// // // FOR Uploading data to server
 // app.use(
-//   fileUpload({
-//     useTempFiles: true,
-//     safeFileNames: true,
-//     preserveExtension: true,
-//     tempFileDir: `${__dirname}/public/files/temp`,
+//   cors({
+//     origin: 'https://portfolio-viq1.onrender.com', // where react app is working
+//     credentials: true,
 //   })
 // );
+
+app.use(function (req, res, next) {
+  //  res.header("Access-Control-Allow-Origin", "*");
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://portfoliomaker.onrender.com',
+    'http://portfoliomaker.onrender.com',
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.header('Access-Control-Allow-credentials', true);
+  res.header(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, DELETE, UPDATE'
+  );
+  next();
+});
 
 // This allows us to access the body of POST/PUT
 // requests in our route handlers (as req.body)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.SECRET));
+// app.use(cookieParser(process.env.SECRET));
 
-//SET UP SESSION
-app.use(
-  session({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+// // SET UP SESSION
+// app.use(
+//   session({
+//     secret: process.env.SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//   })
+// );
 
 // INITIALIZE PASSPORT
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(
-  express.json({
-    limit: '50mb',
-  })
-);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(
+//   express.json({
+//     limit: '50mb',
+//   })
+// );
 
-import('./config/passportConfig.js');
+// import('./config/passportConfig.js');
 
 app.post('/files/upload/:userId', upload.single('file'), uploadFile);
 // Add all the routes to our Express server

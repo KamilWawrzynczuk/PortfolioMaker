@@ -15,7 +15,7 @@ function Contact() {
     if (localStorage.getItem('user_id') !== null) {
       const userId = localStorage.getItem('user_id');
       axios
-        .post('http://localhost:8080/users/getContactData', { userId })
+        .post('https://portfoliocreator.onrender.com/users/getContactData', { userId })
         .then((contactData) => {
           dispatchContactState({
             type: 'UPDATE',

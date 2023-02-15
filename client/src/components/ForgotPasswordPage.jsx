@@ -22,7 +22,7 @@ function ForgotPasswordPage() {
     event.preventDefault();
     try {
       axios
-        .post(`http://localhost:8080/users/forgot-password/`, {
+        .post(`https://portfoliocreator.onrender.com/users/forgot-password/`, {
           email,
         })
         .then((res) => {

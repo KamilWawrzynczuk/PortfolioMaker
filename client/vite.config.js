@@ -7,10 +7,10 @@ export default defineConfig({
     'process.env': {},
   },
   plugins: [react()],
-  proxy: {
-    '/trunk': {
-      target: 'http://localhost:8080',
-      changeOrigin: true,
-    },
-  },
+  // proxy: {
+  //   '/trunk': {
+  //     target: 'http://localhost:8080',
+  //     changeOrigin: true,
+  //   },
+  // },
 });

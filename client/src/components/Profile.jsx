@@ -41,7 +41,7 @@ function Profile() {
     axios
       // This address will change depends on PORT
       // you are using or after uploading
-      .patch('http://localhost:8080/users/changePassword', {
+      .patch('https://portfoliocreator.onrender.com/users/changePassword', {
         newPassword: user.newPassword,
         confirmPassword: user.confirmPassword,
         userId,
@@ -76,7 +76,7 @@ function Profile() {
     axios
       // This address will change depends on PORT
       // you are using or after uploading
-      .patch('http://localhost:8080/users/updateUser', {
+      .patch('https://portfoliocreator.onrender.com/users/updateUser', {
         websiteTitle:
           user.websiteTitle.length > 0
             ? user.websiteTitle
@@ -113,7 +113,7 @@ function Profile() {
     const userId = localStorage.getItem('user_id');
 
     axios
-      .delete(`http://localhost:8080/users/deleteOneUser/${userId}`)
+      .delete(`https://portfoliocreator.onrender.com/users/deleteOneUser/${userId}`)
       .then((response) => {
         auth.contextValue.logout();
         navigate('/');
@@ -128,7 +128,7 @@ function Profile() {
     const userId = localStorage.getItem('user_id');
     axios
 
-      .patch('http://localhost:8080/users/updateUser', {
+      .patch('https://portfoliocreator.onrender.com/users/updateUser', {
         websiteTitle:
           user.websiteTitle.length > 0
             ? user.websiteTitle

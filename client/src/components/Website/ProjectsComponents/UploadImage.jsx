@@ -20,7 +20,7 @@ function UploadImage({ userId, projectId }) {
     data.append('image', file);
     axios
       .patch(
-        `http://localhost:8080/users/uploadImage/${projectId}/${userId}`,
+        `https://portfoliocreator.onrender.com/users/uploadImage/${projectId}/${userId}`,
         data
       )
       .then((updateProject) => {

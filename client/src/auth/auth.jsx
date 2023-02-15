@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         axios
           // This address will change depends on PORT
           // you are using or after uploading
-          .get('http://localhost:8080/protected', {
+          .get('https://portfoliocreator.onrender.com/protected', {
             headers: {
               Authorization: token,
             },
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     axios
       // This address will change depends on PORT
       // you are using or after uploading
-      .post('http://localhost:8080/users/login', {
+      .post('https://portfoliocreator.onrender.com/users/login', {
         email: user.email,
         password: user.password,
       })
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
     axios
       // This address will change depends on PORT
       // you are using or after uploading
-      .get('http://localhost:8080/users/logout')
+      .get('https://portfoliocreator.onrender.com/users/logout')
       .then((respond) => {
         localStorage.removeItem('token');
         localStorage.removeItem('expires');

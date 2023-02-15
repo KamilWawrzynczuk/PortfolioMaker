@@ -12,7 +12,7 @@ function UserIntro() {
     if (localStorage.getItem('user_id') !== null) {
       const userId = localStorage.getItem('user_id');
       axios
-        .post('http://localhost:8080/users/getUserData', { userId })
+        .post('https://portfoliocreator.onrender.com/users/getUserData', { userId })
         .then((userData) => {
 
           dispatchUserState({

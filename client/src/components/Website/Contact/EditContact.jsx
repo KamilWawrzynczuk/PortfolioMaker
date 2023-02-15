@@ -20,7 +20,7 @@ function EditContact(props) {
     props.setIsClicked(!props.isClicked);
     const userId = localStorage.getItem('user_id');
     axios
-      .patch('http://localhost:8080/users/addContactData', {
+      .patch('https://portfoliocreator.onrender.com/users/addContactData', {
         data: contact,
         userId,
       })

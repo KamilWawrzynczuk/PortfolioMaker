@@ -19,7 +19,7 @@ function Projects() {
     if (localStorage.getItem('user_id') !== null) {
       const userId = localStorage.getItem('user_id');
       axios
-        .post('http://localhost:8080/users/getProudOf', { userId })
+        .post('https://portfoliocreator.onrender.com/users/getProudOf', { userId })
         .then((userData) => {
           dispatchProudOfState({
             type: 'UPDATE',
@@ -35,7 +35,7 @@ function Projects() {
   function handleAddProject() {
     const userId = localStorage.getItem('user_id');
     axios
-      .put('http://localhost:8080/users/addProjectData', {
+      .put('https://portfoliocreator.onrender.com/users/addProjectData', {
         userId,
       })
       .then((newProject) => {

@@ -15,7 +15,7 @@ import Line from './components/Line';
 import { useContext } from 'react';
 import { userSocialContext } from './context/userSocialContext';
 import axios from 'axios';
-import FinalWebsite from './components/Website/ProjectsComponents/FinalWebsite';
+import FinalWebsite from './components/Website/FinalWebsite';
 import AllDataContext from './context/getAllDataContext';
 function App() {
   const { userSocialState, dispatchUserSocialState } =
@@ -29,8 +29,8 @@ function App() {
   let websiteTitle = 'Portfolio Creator';
 
   if (isAuth === false) {
-    github = 'https://github.com';
-    linkedIn = 'https://linkedin.com';
+    github = 'www.github.com';
+    linkedIn = 'www.linkedin.com';
   } else {
     github = userSocialState.github;
     linkedIn = userSocialState.linkedIn;
@@ -44,7 +44,7 @@ function App() {
     if (localStorage.getItem('user_id') !== null) {
       const userId = window.localStorage.getItem('user_id');
       axios
-        .post('http://localhost:8080/users/getOne', { userId })
+        .post('https://portfoliocreator.onrender.com/users/getOne', { userId })
         .then((userData) => {
           dispatchUserSocialState({
             type: 'UPDATE',

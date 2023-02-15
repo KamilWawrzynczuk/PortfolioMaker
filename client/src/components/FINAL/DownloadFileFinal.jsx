@@ -10,7 +10,7 @@ function DownloadFileFinal({ fName, lName, userId }) {
     e.preventDefault();
 
     axios({
-      url: `http://localhost:8080/users/downloadFile/${userId}`,
+      url: `https://portfoliocreator.onrender.com/users/downloadFile/${userId}`,
       method: 'POST',
       responseType: 'blob',
       data: userId,

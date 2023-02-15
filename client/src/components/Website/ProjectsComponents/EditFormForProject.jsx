@@ -39,7 +39,7 @@ function EditFormForProject(props) {
 
     const userId = localStorage.getItem('user_id');
     axios
-      .put('http://localhost:8080/users/addProjectData', {
+      .put('https://portfoliocreator.onrender.com/users/addProjectData', {
         data: {
           subtitle:
             note.subtitle.length > 0

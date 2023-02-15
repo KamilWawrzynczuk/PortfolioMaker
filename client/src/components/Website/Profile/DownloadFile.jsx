@@ -17,7 +17,7 @@ function DownloadFile({ isAuth }) {
     e.preventDefault();
     const userId = localStorage.getItem('user_id');
     axios({
-      url: `http://localhost:8080/users/downloadFile/${userId}`,
+      url: `https://portfoliocreator.onrender.com/users/downloadFile/${userId}`,
       method: 'POST',
       responseType: 'blob',
       data: userId,
